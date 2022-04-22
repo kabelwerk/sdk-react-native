@@ -4,6 +4,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { KabelwerkProvider } from 'kabelwerk-react-native';
+
 import { ConfigContext, ConfigProvider } from './ConfigContext.jsx';
 import { HomeScreen } from './HomeScreen.jsx';
 import { ConfigScreen } from './ConfigScreen.jsx';
@@ -25,13 +27,15 @@ const App = function () {
 
               if (config.url && config.token) {
                 return (
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="home"
-                      component={HomeScreen}
-                      options={{ title: 'Home' }}
-                    />
-                  </Stack.Navigator>
+                  <KabelwerkProvider url={config.url} token={config.token}>
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="home"
+                        component={HomeScreen}
+                        options={{ title: 'Home' }}
+                      />
+                    </Stack.Navigator>
+                  </KabelwerkProvider>
                 );
               }
 

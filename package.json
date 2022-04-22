@@ -11,12 +11,17 @@
   },
   "license": "MIT",
   "author": "Kabelwerk <devs@kabelwerk.io> (https://kabelwerk.io)",
+  "main": "src/index.js",
+  "type": "module",
   "repository": "github:kabelwerk/sdk-react-native",
   "dependencies": {
     "kabelwerk": "0.3.0"
   },
   "devDependencies": {
     "prettier": "^2.6.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
   },
   "scripts": {
     "format": "prettier --write ."
