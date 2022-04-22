@@ -1,0 +1,15 @@
+/.git/
+
+# dependencies
+/node_modules/
+/demo/node_modules/
+/website/node_modules/
+
+# demo build files
+/demo/.expo/
+/demo/dist/
+/demo/web-build/
+
+# website build files
+/website/build/
+/website/.docusaurus/

@@ -14,5 +14,14 @@
   "repository": "github:kabelwerk/sdk-react-native",
   "dependencies": {
     "kabelwerk": "0.3.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  },
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
