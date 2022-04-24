@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ConfigContext } from './ConfigContext.jsx';
 
-const HomeScreen = function () {
+const HomeScreen = function ({ navigation }) {
   const config = React.useContext(ConfigContext);
 
   const resetToken = function () {
@@ -16,6 +16,10 @@ const HomeScreen = function () {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Button
+        title="Go to the chat"
+        onPress={() => navigation.navigate('chat-room')}
+      />
       <Button title="Reset configuration" onPress={resetToken} />
     </SafeAreaView>
   );
@@ -23,10 +27,9 @@ const HomeScreen = function () {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'space-evenly',
   },
 });
 

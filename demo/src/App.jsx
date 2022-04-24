@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { KabelwerkProvider } from 'kabelwerk-react-native';
+import { KabelwerkProvider, KabelwerkRoom } from 'kabelwerk-react-native';
 
 import { ConfigContext, ConfigProvider } from './ConfigContext.jsx';
 import { HomeScreen } from './HomeScreen.jsx';
@@ -27,12 +27,21 @@ const App = function () {
 
               if (config.url && config.token) {
                 return (
-                  <KabelwerkProvider url={config.url} token={config.token}>
+                  <KabelwerkProvider
+                    url={config.url}
+                    token={config.token}
+                    logging="info"
+                  >
                     <Stack.Navigator>
                       <Stack.Screen
                         name="home"
                         component={HomeScreen}
                         options={{ title: 'Home' }}
+                      />
+                      <Stack.Screen
+                        name="chat-room"
+                        component={KabelwerkRoom}
+                        options={{ title: 'Chat' }}
                       />
                     </Stack.Navigator>
                   </KabelwerkProvider>

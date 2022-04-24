@@ -30,9 +30,8 @@ const ConfigScreen = function () {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'space-around',
   },
   fieldset: {

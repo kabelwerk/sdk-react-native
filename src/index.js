@@ -1,3 +1,2 @@
-import { KabelwerkContext, KabelwerkProvider } from './KabelwerkContext.jsx';
-
-export { KabelwerkContext, KabelwerkProvider };
+export { KabelwerkContext, KabelwerkProvider } from './KabelwerkContext.jsx';
+export { KabelwerkRoom } from './KabelwerkRoom.jsx';
