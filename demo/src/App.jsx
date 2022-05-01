@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { KabelwerkProvider, KabelwerkRoom } from 'kabelwerk-react-native';
+import { KabelwerkProvider, KabelwerkRoomScreen } from 'kabelwerk-react-native';
 
 import { ConfigContext, ConfigProvider } from './ConfigContext.jsx';
 import { HomeScreen } from './HomeScreen.jsx';
@@ -40,7 +40,7 @@ const App = function () {
                       />
                       <Stack.Screen
                         name="chat-room"
-                        component={KabelwerkRoom}
+                        component={KabelwerkRoomScreen}
                         options={{ title: 'Chat' }}
                       />
                     </Stack.Navigator>

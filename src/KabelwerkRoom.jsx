@@ -104,6 +104,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         keyExtractor={(message) => message.id}
         renderItem={renderItem}
         inverted={true}
+        initialNumToRender={20}
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
       />
