@@ -4,8 +4,11 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
 
-const KabelwerkRoom = function ({ id = 0 }) {
+const KabelwerkRoom = function ({ roomId = 0 }) {
   const context = React.useContext(KabelwerkContext);
+
+  // the Kabelwerk ID of the connected user
+  const userId = Kabelwerk.getUser().id;
 
   // the Kabelwerk room object
   const room = React.useRef(null);
@@ -13,22 +16,24 @@ const KabelwerkRoom = function ({ id = 0 }) {
   // whether the room's ready event has been already fired
   const [isReady, setIsReady] = React.useState(false);
 
-  // the already loaded chat messages
+  // the loaded chat messages, in reversed order (most recent first)
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
     if (context.isReady) {
-      room.current = Kabelwerk.openRoom(id);
+      room.current = Kabelwerk.openRoom(roomId);
 
       // when the initial list is messages is loaded
       room.current.on('ready', ({ messages }) => {
-        setMessages(messages);
+        setMessages(messages.slice().reverse());
         setIsReady(true);
       });
 
       // when a new message is posted in the room
       room.current.on('message_posted', (message) => {
-        setMessages((messages) => messages.concat([message]));
+        setMessages((messages) => {
+          return [message].concat(messages);
+        });
       });
 
       room.current.connect();
@@ -45,10 +50,36 @@ const KabelwerkRoom = function ({ id = 0 }) {
       setIsReady(false);
       setMessages([]);
     };
-  }, [context.isReady, id]);
+  }, [context.isReady, roomId]);
 
-  const userId = Kabelwerk.getUser().id;
+  // fetch more messages from earlier in the chat history
+  const loadEarlierMessages = function () {
+    if (room.current) {
+      room.current
+        .loadEarlier()
+        .then(({ messages }) => {
+          if (messages.length) {
+            setMessages((currMessages) =>
+              currMessages.concat(messages.reverse())
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
 
+  // post a new message in the chat room
+  const postMessage = function (text) {
+    if (room.current) {
+      room.current.postMessage({ text }).catch((error) => {
+        console.error(error);
+      });
+    }
+  };
+
+  // render a chat message
   const renderItem = function ({ item }) {
     return (
       <View
@@ -69,11 +100,12 @@ const KabelwerkRoom = function ({ id = 0 }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={messages.reverse()}
+        data={messages}
         keyExtractor={(message) => message.id}
         renderItem={renderItem}
         inverted={true}
         style={styles.flatList}
+        onEndReached={loadEarlierMessages}
       />
     </View>
   );
