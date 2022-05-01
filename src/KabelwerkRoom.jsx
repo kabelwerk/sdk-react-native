@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
+import { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
 
 const KabelwerkRoom = function ({ roomId = 0 }) {
   const context = React.useContext(KabelwerkContext);
@@ -27,6 +28,10 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       room.current.on('ready', ({ messages }) => {
         setMessages(messages.slice().reverse());
         setIsReady(true);
+
+        if (messages.length) {
+          room.current.moveMarker();
+        }
       });
 
       // when a new message is posted in the room
@@ -34,6 +39,8 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         setMessages((messages) => {
           return [message].concat(messages);
         });
+
+        room.current.moveMarker();
       });
 
       room.current.connect();
@@ -71,9 +78,9 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   };
 
   // post a new message in the chat room
-  const postMessage = function (text) {
+  const postMessage = function (params) {
     if (room.current) {
-      room.current.postMessage({ text }).catch((error) => {
+      room.current.postMessage(params).catch((error) => {
         console.error(error);
       });
     }
@@ -108,6 +115,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
       />
+      <KabelwerkMessageForm postMessage={postMessage} />
     </View>
   );
 };
