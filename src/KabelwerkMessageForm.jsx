@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const KabelwerkMessageForm = function ({ postMessage }) {
   // the value of the text input for posting new messages
@@ -23,7 +29,9 @@ const KabelwerkMessageForm = function ({ postMessage }) {
         onChangeText={setDraft}
       />
       {draft.length > 0 && (
-        <Button style={styles.sendButton} title="Send" onPress={handleSend} />
+        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+          <Text style={styles.sendButtonText}>▶</Text>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -37,9 +45,15 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
+    fontSize: 18,
     padding: 16,
   },
-  sendButton: {},
+  sendButton: {
+    marginRight: 8,
+  },
+  sendButtonText: {
+    fontSize: 20,
+  },
 });
 
 export { KabelwerkMessageForm };

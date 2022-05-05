@@ -6,7 +6,7 @@ import { KabelwerkContext } from './KabelwerkContext.jsx';
 import { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
 
 const KabelwerkRoom = function ({ roomId = 0 }) {
-  const context = React.useContext(KabelwerkContext);
+  const { isReady } = React.useContext(KabelwerkContext);
 
   // the Kabelwerk ID of the connected user
   const userId = Kabelwerk.getUser().id;
@@ -14,20 +14,16 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   // the Kabelwerk room object
   const room = React.useRef(null);
 
-  // whether the room's ready event has been already fired
-  const [isReady, setIsReady] = React.useState(false);
-
   // the loaded chat messages, in reversed order (most recent first)
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
-    if (context.isReady) {
+    if (isReady) {
       room.current = Kabelwerk.openRoom(roomId);
 
       // when the initial list is messages is loaded
       room.current.on('ready', ({ messages }) => {
         setMessages(messages.slice().reverse());
-        setIsReady(true);
 
         if (messages.length) {
           room.current.moveMarker();
@@ -54,10 +50,9 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       }
 
       // reset the state
-      setIsReady(false);
       setMessages([]);
     };
-  }, [context.isReady, roomId]);
+  }, [isReady, roomId]);
 
   // fetch more messages from earlier in the chat history
   const loadEarlierMessages = function () {
@@ -100,10 +95,6 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
     );
   };
 
-  if (!isReady) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -111,7 +102,6 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         keyExtractor={(message) => message.id}
         renderItem={renderItem}
         inverted={true}
-        initialNumToRender={20}
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
       />
