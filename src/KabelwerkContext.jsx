@@ -1,5 +1,6 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
+import { AppState } from 'react-native';
 
 const KabelwerkContext = React.createContext({
   state: Kabelwerk.getState(),
@@ -14,7 +15,11 @@ const KabelwerkProvider = function ({
   ensureRooms = 'all',
   logging = 'silent',
 }) {
-  // the current connection state
+  // a number incremented each time the connection needs to be re-established
+  // after having been closed by the OS
+  const [revivalsCount, setRevivalsCount] = React.useState(0);
+
+  // the current Kabelwerk connection state
   const [state, setState] = React.useState(Kabelwerk.getState);
 
   // whether Kabelwerk's ready event has been already fired
@@ -23,7 +28,26 @@ const KabelwerkProvider = function ({
   // the Kabelwerk notifier object
   const notifier = React.useRef(null);
 
-  // setup the Kabelwerk connection
+  // setup an app state event listener
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', (appState) => {
+      // some time after the app is moved to the background, the OS closes the
+      // websocket connection with code 1000 (normal closure) — which sets the
+      // state to INACTIVE
+      if (appState == 'active' && Kabelwerk.getState() == Kabelwerk.INACTIVE) {
+        // bump the revival count in order to trigger a reconnection
+        setRevivalsCount((count) => count + 1);
+      }
+    });
+
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
+  }, []);
+
+  // setup (and clean up after) the Kabelwerk connection
   React.useEffect(() => {
     Kabelwerk.config({ url, token, refreshToken, ensureRooms, logging });
 
@@ -63,7 +87,7 @@ const KabelwerkProvider = function ({
       setState(Kabelwerk.getState);
       setIsReady(false);
     };
-  }, [url, token, refreshToken, ensureRooms, logging]);
+  }, [revivalsCount, url, token, refreshToken, ensureRooms, logging]);
 
   return (
     <KabelwerkContext.Provider value={{ state, isReady }}>

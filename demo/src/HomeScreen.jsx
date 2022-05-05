@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { ConfigContext } from './ConfigContext.jsx';
 
