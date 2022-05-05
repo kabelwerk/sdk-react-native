@@ -1,6 +1,5 @@
 import { registerRootComponent } from 'expo';
 import { Text } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -17,50 +16,48 @@ const Stack = createNativeStackNavigator();
 const App = function () {
   return (
     <ConfigProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <ConfigContext.Consumer>
-            {(config) => {
-              if (config.isLoading) {
-                return <Text>Loading...</Text>;
-              }
+      <NavigationContainer>
+        <ConfigContext.Consumer>
+          {(config) => {
+            if (config.isLoading) {
+              return <Text>Loading...</Text>;
+            }
 
-              if (config.url && config.token) {
-                return (
-                  <KabelwerkProvider
-                    url={config.url}
-                    token={config.token}
-                    logging="info"
-                  >
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="home"
-                        component={HomeScreen}
-                        options={{ title: 'Home' }}
-                      />
-                      <Stack.Screen
-                        name="chat-room"
-                        component={KabelwerkRoomScreen}
-                        options={{ title: 'Chat' }}
-                      />
-                    </Stack.Navigator>
-                  </KabelwerkProvider>
-                );
-              }
-
+            if (config.url && config.token) {
               return (
-                <Stack.Navigator>
-                  <Stack.Screen
-                    name="config"
-                    component={ConfigScreen}
-                    options={{ title: 'Configuration' }}
-                  />
-                </Stack.Navigator>
+                <KabelwerkProvider
+                  url={config.url}
+                  token={config.token}
+                  logging="info"
+                >
+                  <Stack.Navigator>
+                    <Stack.Screen
+                      name="home"
+                      component={HomeScreen}
+                      options={{ title: 'Home' }}
+                    />
+                    <Stack.Screen
+                      name="chat-room"
+                      component={KabelwerkRoomScreen}
+                      options={{ title: 'Chat' }}
+                    />
+                  </Stack.Navigator>
+                </KabelwerkProvider>
               );
-            }}
-          </ConfigContext.Consumer>
-        </NavigationContainer>
-      </SafeAreaProvider>
+            }
+
+            return (
+              <Stack.Navigator>
+                <Stack.Screen
+                  name="config"
+                  component={ConfigScreen}
+                  options={{ title: 'Configuration' }}
+                />
+              </Stack.Navigator>
+            );
+          }}
+        </ConfigContext.Consumer>
+      </NavigationContainer>
     </ConfigProvider>
   );
 };

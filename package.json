@@ -21,8 +21,7 @@
     "prettier": "^2.6.2"
   },
   "peerDependencies": {
-    "react-native": "*",
-    "react-native-safe-area-context": "*"
+    "react-native": "*"
   },
   "scripts": {
     "format": "prettier --write ."
