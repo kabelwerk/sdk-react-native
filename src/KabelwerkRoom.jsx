@@ -3,7 +3,73 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
+import { KabelwerkMessage } from './KabelwerkMessage.jsx';
 import { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
+import { KabelwerkMessageSeparator } from './KabelwerkMessageSeparator.jsx';
+import { toDateString } from './datetime.js';
+
+// expand the given list of chat items into the past with earlier messages,
+// interspersing separators as needed
+//
+// note that the list is in reverse order, i.e. its last item is earliest
+const expandEarlier = function (listItems, messages) {
+  let lastDate;
+
+  if (listItems.length) {
+    const lastItem = listItems[listItems.length - 1];
+
+    if (lastItem.type != 'separator') {
+      lastDate = lastItem.dateString;
+    }
+  }
+
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+
+    message.dateString = toDateString(message.insertedAt);
+
+    if (lastDate && lastDate != message.dateString) {
+      listItems.push({ type: 'separator', id: lastDate, dateString: lastDate });
+    }
+
+    listItems.push(message);
+
+    lastDate = message.dateString;
+  }
+
+  // if we have reached the beginning of the chat room's history
+  if (!messages.length && lastDate) {
+    listItems.push({ type: 'separator', id: lastDate, dateString: lastDate });
+  }
+
+  return listItems;
+};
+
+// expand the given list of chat items with a newer message, adding a separator
+// if the new message is a first of a day
+//
+// note that the list is in reverse order, i.e. its first item is the latest
+const expandNew = function (listItems, message) {
+  const items = [];
+
+  message.dateString = toDateString(message.insertedAt);
+
+  items.push(message);
+
+  if (!listItems.length) {
+    return items;
+  }
+
+  if (listItems[0].dateString != message.dateString) {
+    items.push({
+      type: 'separator',
+      id: message.dateString,
+      dateString: message.dateString,
+    });
+  }
+
+  return items.concat(listItems);
+};
 
 const KabelwerkRoom = function ({ roomId = 0 }) {
   const { isReady } = React.useContext(KabelwerkContext);
@@ -12,15 +78,18 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   const room = React.useRef(null);
 
   // the loaded chat messages, in reversed order (most recent first)
-  const [messages, setMessages] = React.useState([]);
+  const [listItems, setListItems] = React.useState([]);
 
+  // setup (and clean up after) the Kabelwerk room object
   React.useEffect(() => {
     if (isReady && Kabelwerk.getState() != Kabelwerk.INACTIVE) {
       room.current = Kabelwerk.openRoom(roomId);
 
       // when the initial list is messages is loaded
-      room.current.on('ready', ({ messages }) => {
-        setMessages(messages.slice().reverse());
+      room.current.on('ready', ({ messages, markers }) => {
+        setListItems(() => {
+          return expandEarlier([], messages);
+        });
 
         if (messages.length) {
           room.current.moveMarker();
@@ -29,8 +98,8 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
 
       // when a new message is posted in the room
       room.current.on('message_posted', (message) => {
-        setMessages((messages) => {
-          return [message].concat(messages);
+        setListItems((listItems) => {
+          return expandNew(listItems, message);
         });
 
         room.current.moveMarker();
@@ -47,7 +116,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       }
 
       // reset the state
-      setMessages([]);
+      setListItems([]);
     };
   }, [isReady, roomId]);
 
@@ -57,11 +126,9 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       room.current
         .loadEarlier()
         .then(({ messages }) => {
-          if (messages.length) {
-            setMessages((currMessages) =>
-              currMessages.concat(messages.reverse())
-            );
-          }
+          setListItems((listItems) => {
+            return expandEarlier(listItems, messages);
+          });
         })
         .catch((error) => {
           console.error(error);
@@ -78,27 +145,19 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
     }
   };
 
-  // render a chat message
+  // render a chat message or a horizontal separator with a date
   const renderItem = function ({ item }) {
-    return (
-      <View
-        style={[
-          styles.message,
-          item.user.id == Kabelwerk.getUser().id
-            ? styles.messageOurs
-            : styles.messageTheirs,
-        ]}
-      >
-        <Text>{item.text}</Text>
-      </View>
-    );
+    if (item.type == 'separator') {
+      return <KabelwerkMessageSeparator separator={item} />;
+    } else {
+      return <KabelwerkMessage message={item} marker={null} />;
+    }
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id}
+        data={listItems}
         renderItem={renderItem}
         inverted={true}
         style={styles.flatList}
@@ -117,16 +176,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  message: {
-    backgroundColor: 'white',
-    marginTop: 16,
-    maxWidth: '70%',
-    padding: 16,
-  },
-  messageOurs: {
-    alignSelf: 'flex-end',
-  },
-  messageTheirs: {},
 });
 
 export { KabelwerkRoom };
