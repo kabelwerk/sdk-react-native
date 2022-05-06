@@ -8,9 +8,6 @@ import { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
 const KabelwerkRoom = function ({ roomId = 0 }) {
   const { isReady } = React.useContext(KabelwerkContext);
 
-  // the Kabelwerk ID of the connected user
-  const userId = Kabelwerk.getUser().id;
-
   // the Kabelwerk room object
   const room = React.useRef(null);
 
@@ -18,7 +15,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
-    if (isReady) {
+    if (isReady && Kabelwerk.getState() != Kabelwerk.INACTIVE) {
       room.current = Kabelwerk.openRoom(roomId);
 
       // when the initial list is messages is loaded
@@ -87,7 +84,9 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       <View
         style={[
           styles.message,
-          item.user.id == userId ? styles.messageOurs : styles.messageTheirs,
+          item.user.id == Kabelwerk.getUser().id
+            ? styles.messageOurs
+            : styles.messageTheirs,
         ]}
       >
         <Text>{item.text}</Text>
