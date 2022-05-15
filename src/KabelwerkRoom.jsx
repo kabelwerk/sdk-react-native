@@ -77,8 +77,11 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   // the Kabelwerk room object
   const room = React.useRef(null);
 
-  // the loaded chat messages, in reversed order (most recent first)
+  // the messages and date separators, in reverse order (most recent first)
   const [listItems, setListItems] = React.useState([]);
+
+  // the ID of the message marked by the other side
+  const [theirMarker, setTheirMarker] = React.useState(-1);
 
   // setup (and clean up after) the Kabelwerk room object
   React.useEffect(() => {
@@ -87,22 +90,29 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
 
       // when the initial list is messages is loaded
       room.current.on('ready', ({ messages, markers }) => {
-        setListItems(() => {
-          return expandEarlier([], messages);
-        });
+        setListItems(() => expandEarlier([], messages));
 
         if (messages.length) {
           room.current.moveMarker();
+        }
+
+        if (markers[1]) {
+          setTheirMarker(markers[1].messageId);
         }
       });
 
       // when a new message is posted in the room
       room.current.on('message_posted', (message) => {
-        setListItems((listItems) => {
-          return expandNew(listItems, message);
-        });
+        setListItems((listItems) => expandNew(listItems, message));
 
         room.current.moveMarker();
+      });
+
+      // when a marker in the room is moved
+      room.current.on('marker_moved', (marker) => {
+        if (marker.userId != Kabelwerk.getUser().id) {
+          setTheirMarker(marker.messageId);
+        }
       });
 
       room.current.connect();
@@ -117,6 +127,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
 
       // reset the state
       setListItems([]);
+      setTheirMarker(-1);
     };
   }, [isReady, roomId]);
 
@@ -126,9 +137,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       room.current
         .loadEarlier()
         .then(({ messages }) => {
-          setListItems((listItems) => {
-            return expandEarlier(listItems, messages);
-          });
+          setListItems((listItems) => expandEarlier(listItems, messages));
         })
         .catch((error) => {
           console.error(error);
@@ -150,7 +159,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
     if (item.type == 'separator') {
       return <KabelwerkMessageSeparator separator={item} />;
     } else {
-      return <KabelwerkMessage message={item} marker={null} />;
+      return <KabelwerkMessage message={item} theirMarker={theirMarker} />;
     }
   };
 
@@ -158,6 +167,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
     <View style={styles.container}>
       <FlatList
         data={listItems}
+        extraData={theirMarker}
         renderItem={renderItem}
         inverted={true}
         style={styles.flatList}
