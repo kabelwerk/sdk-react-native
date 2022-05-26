@@ -1,25 +1,14 @@
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Button, SafeAreaView, StyleSheet } from 'react-native';
 
-import { ConfigContext } from './ConfigContext.jsx';
-
-const HomeScreen = function ({ navigation }) {
-  const config = React.useContext(ConfigContext);
-
-  const resetToken = function () {
-    config.update({
-      url: config.url,
-      token: '',
-    });
-  };
-
+const HomeScreen = function ({ navigation, logout }) {
   return (
     <SafeAreaView style={styles.container}>
       <Button
         title="Go to the chat"
         onPress={() => navigation.navigate('chat-room')}
       />
-      <Button title="Reset configuration" onPress={resetToken} />
+      <Button title="Reset configuration" onPress={logout} />
     </SafeAreaView>
   );
 };

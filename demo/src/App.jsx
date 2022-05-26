@@ -1,64 +1,104 @@
 import { registerRootComponent } from 'expo';
-import { Text } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { KabelwerkProvider, KabelwerkRoomScreen } from 'kabelwerk-react-native';
 
-import { ConfigContext, ConfigProvider } from './ConfigContext.jsx';
-import { HomeScreen } from './HomeScreen.jsx';
+import * as backend from './backend.js';
+import * as storage from './storage.js';
 import { ConfigScreen } from './ConfigScreen.jsx';
+import { HomeScreen } from './HomeScreen.jsx';
 
 // we do not really need react navigation for the demo, but we use it in order
 // to test our KabelwerkRoomScreen component
 const Stack = createNativeStackNavigator();
 
 const App = function () {
+  // whether the first loading from secure storage is done
+  const [appIsReady, setAppIsReady] = React.useState(false);
+
+  // the user's name
+  const [name, setName] = React.useState('');
+
+  // the Kabelwerk auth token
+  const [token, setToken] = React.useState('');
+
+  // set the name and token from the local storage
+  const loadConfig = function () {
+    return storage.load().then(({ name, token }) => {
+      setName(name);
+      setToken(token);
+    });
+  };
+
+  // generate a new demo user
+  const generateUser = React.useCallback(() => {
+    return backend
+      .generateUser()
+      .then(({ key, name, token }) => {
+        return storage.update({ name, token });
+      })
+      .then(() => {
+        return loadConfig();
+      });
+  }, []);
+
+  // update the user's name, also in the local storage
+  const updateName = React.useCallback((newName) => {
+    return storage.update({ name: newName, token }).then(() => {
+      return loadConfig();
+    });
+  }, []);
+
+  // reset the name and token, also in the local storage
+  const logout = React.useCallback(() => {
+    storage.reset().then(() => {
+      return loadConfig();
+    });
+  }, []);
+
+  // bootstrap the app
+  React.useEffect(() => {
+    loadConfig().finally(() => {
+      setAppIsReady(true);
+    });
+  }, []);
+
   return (
-    <ConfigProvider>
-      <NavigationContainer>
-        <ConfigContext.Consumer>
-          {(config) => {
-            if (config.isLoading) {
-              return <Text>Loading...</Text>;
-            }
-
-            if (config.url && config.token) {
-              return (
-                <KabelwerkProvider
-                  url={config.url}
-                  token={config.token}
-                  logging="info"
-                >
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="home"
-                      component={HomeScreen}
-                      options={{ title: 'Home' }}
-                    />
-                    <Stack.Screen
-                      name="chat-room"
-                      component={KabelwerkRoomScreen}
-                      options={{ title: 'Chat' }}
-                    />
-                  </Stack.Navigator>
-                </KabelwerkProvider>
-              );
-            }
-
-            return (
-              <Stack.Navigator>
-                <Stack.Screen
-                  name="config"
-                  component={ConfigScreen}
-                  options={{ title: 'Configuration' }}
-                />
-              </Stack.Navigator>
-            );
-          }}
-        </ConfigContext.Consumer>
-      </NavigationContainer>
-    </ConfigProvider>
+    <NavigationContainer>
+      {token ? (
+        <KabelwerkProvider
+          url={backend.WEBSOCKET_URL}
+          token={token}
+          logging="info"
+        >
+          <Stack.Navigator>
+            <Stack.Screen name="home" options={{ title: 'Home' }}>
+              {(props) => <HomeScreen {...props} logout={logout} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="chat-room"
+              component={KabelwerkRoomScreen}
+              options={{ title: 'Chat' }}
+            />
+          </Stack.Navigator>
+        </KabelwerkProvider>
+      ) : (
+        <Stack.Navigator>
+          <Stack.Screen name="config" options={{ title: 'Configuration' }}>
+            {(props) => (
+              <ConfigScreen
+                {...props}
+                name={name}
+                token={token}
+                generateUser={generateUser}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      )}
+    </NavigationContainer>
   );
 };
 

@@ -1,21 +1,23 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  Button,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
-import { ConfigContext } from './ConfigContext.jsx';
-
-const ConfigScreen = function () {
-  const config = React.useContext(ConfigContext);
-
+const ConfigScreen = function (props) {
   // the form field values
-  const [url, setUrl] = React.useState(config.url);
-  const [token, setToken] = React.useState(config.token);
+  const [name, setName] = React.useState(props.name);
+  const [token, setToken] = React.useState(props.token);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.fieldset}>
-        <Text>The Kabelwerk WebSocket URL to connect to</Text>
-        <TextInput value={url} placeholder="URL" onChangeText={setUrl} />
+        <Text>The user's name</Text>
+        <TextInput value={name} placeholder="Name" onChangeText={setName} />
       </View>
 
       <View style={styles.fieldset}>
@@ -23,7 +25,7 @@ const ConfigScreen = function () {
         <TextInput value={token} placeholder="Token" onChangeText={setToken} />
       </View>
 
-      <Button title="Connect" onPress={() => config.update({ url, token })} />
+      <Button title="Connect" onPress={props.generateUser} />
     </SafeAreaView>
   );
 };
