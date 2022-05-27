@@ -17,10 +17,15 @@ const generateUser = function () {
     body: JSON.stringify({ name: 'anonymous' }),
   })
     .then((response) => {
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`${response.status} — ${response.statusText}`);
+      }
     })
     .catch((error) => {
-      console.error(error);
+      // convert into a generic error
+      throw new Error(error.message);
     });
 };
 

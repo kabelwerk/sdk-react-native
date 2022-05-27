@@ -10,10 +10,15 @@ const HomeScreen = function ({ navigation, logout }) {
         </Text>
         <Text style={styles.welcomeText}>
           A demo user has been automatically generated for you and its auth
-          token is persisted on the device's local storage. You can use the
-          reset button at any time to generate a new user.
+          token is persisted in the device's local storage.
+        </Text>
+        <Text style={styles.welcomeText}>
+          You could update the user's name via the settings, or you could reset
+          the auth token and generate a new demo user. But most importantly, you
+          can open the chat screen!
         </Text>
       </View>
+
       <View style={styles.buttons}>
         <Button
           title="Open chat"

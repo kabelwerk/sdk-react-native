@@ -8,6 +8,7 @@ import { KabelwerkProvider, KabelwerkRoomScreen } from 'kabelwerk-react-native';
 import * as backend from './backend.js';
 import * as storage from './storage.js';
 import { HomeScreen } from './HomeScreen.jsx';
+import { NoTokenScreen } from './NoTokenScreen.jsx';
 import { SettingsScreen } from './SettingsScreen.jsx';
 
 // we do not really need react navigation for the demo, but we use it in order
@@ -95,9 +96,9 @@ const App = function () {
         </KabelwerkProvider>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="settings" options={{ title: 'Settings' }}>
+          <Stack.Screen name="no-token" options={{ title: 'Kabelwerk Demo' }}>
             {(props) => (
-              <SettingsScreen {...props} name={name} updateName={updateName} />
+              <NoTokenScreen {...props} generateUser={generateUser} />
             )}
           </Stack.Screen>
         </Stack.Navigator>
