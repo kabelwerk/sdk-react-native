@@ -78,6 +78,7 @@ const App = function () {
           url={backend.WEBSOCKET_URL}
           token={token}
           logging="info"
+          userName={name}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>

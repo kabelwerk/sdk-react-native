@@ -14,6 +14,7 @@ const KabelwerkProvider = function ({
   refreshToken = undefined,
   ensureRooms = 'all',
   logging = 'silent',
+  userName = undefined,
 }) {
   // a number incremented each time the connection needs to be re-established
   // after having been closed by the OS
@@ -88,6 +89,13 @@ const KabelwerkProvider = function ({
       setIsReady(false);
     };
   }, [revivalsCount, url, token, refreshToken, ensureRooms, logging]);
+
+  // update the connected user's name
+  React.useEffect(() => {
+    if (isReady && userName && Kabelwerk.getUser().name != userName) {
+      Kabelwerk.updateUser({ name: userName });
+    }
+  }, [isReady, userName]);
 
   return (
     <KabelwerkContext.Provider value={{ state, isReady }}>
