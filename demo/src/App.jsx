@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
 import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,9 +18,6 @@ import { SettingsScreen } from './SettingsScreen.jsx';
 const Stack = createNativeStackNavigator();
 
 const App = function () {
-  // whether the first loading from secure storage is done
-  const [appIsReady, setAppIsReady] = React.useState(false);
-
   // the user's name
   const [name, setName] = React.useState('');
 
@@ -61,14 +59,15 @@ const App = function () {
 
   // bootstrap the app
   React.useEffect(() => {
-    loadConfig()
+    SplashScreen.preventAutoHideAsync()
+      .then(loadConfig)
       .then(({ token }) => {
         if (!token) {
           return generateUser();
         }
       })
       .finally(() => {
-        setAppIsReady(true);
+        SplashScreen.hideAsync();
       });
   }, []);
 
