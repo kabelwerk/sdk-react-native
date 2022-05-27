@@ -1,23 +1,7 @@
 import React from 'react';
-import {
-  Alert,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-const NoTokenScreen = function (props) {
-  const generateUser = function () {
-    props.generateUser().catch((error) => {
-      Alert.alert(
-        'Generating a user failed',
-        `The request to the Kabelwerk backend failed with the following error: ${error.message}`
-      );
-    });
-  };
-
+const NoTokenScreen = function ({ generateUser }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.explanation}>

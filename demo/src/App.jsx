@@ -1,5 +1,6 @@
 import { registerRootComponent } from 'expo';
 import React from 'react';
+import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -30,6 +31,7 @@ const App = function () {
     return storage.load().then(({ name, token }) => {
       setName(name);
       setToken(token);
+      return { name, token };
     });
   };
 
@@ -37,33 +39,37 @@ const App = function () {
   const generateUser = React.useCallback(() => {
     return backend
       .generateUser()
-      .then(({ key, name, token }) => {
-        return storage.update({ name, token });
-      })
-      .then(() => {
-        return loadConfig();
+      .then(storage.update)
+      .then(loadConfig)
+      .catch((error) => {
+        Alert.alert('Generating a user failed', error.message);
       });
   }, []);
 
   // update the user's name, also in the local storage
-  const updateName = React.useCallback((newName) => {
-    return storage.update({ name: newName, token }).then(() => {
-      return loadConfig();
-    });
-  }, []);
+  const updateName = React.useCallback(
+    (newName) => {
+      return storage.update({ name: newName, token }).then(loadConfig);
+    },
+    [token]
+  );
 
   // reset the name and token, also in the local storage
   const logout = React.useCallback(() => {
-    storage.reset().then(() => {
-      return loadConfig();
-    });
+    storage.reset().then(loadConfig);
   }, []);
 
   // bootstrap the app
   React.useEffect(() => {
-    loadConfig().finally(() => {
-      setAppIsReady(true);
-    });
+    loadConfig()
+      .then(({ token }) => {
+        if (!token) {
+          return generateUser();
+        }
+      })
+      .finally(() => {
+        setAppIsReady(true);
+      });
   }, []);
 
   return (

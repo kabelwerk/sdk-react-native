@@ -25,7 +25,9 @@ const generateUser = function () {
     })
     .catch((error) => {
       // convert into a generic error
-      throw new Error(error.message);
+      throw new Error(
+        `The request to the Kabelwerk backend failed with the following error: ${error.message}`
+      );
     });
 };
 

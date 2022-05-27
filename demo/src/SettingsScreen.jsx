@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   SafeAreaView,
   StyleSheet,
@@ -20,7 +21,7 @@ const SettingsScreen = function (props) {
         props.navigation.navigate('home');
       })
       .catch((error) => {
-        alert(error);
+        Alert.alert('Updating the user name failed', error.message);
       });
   };
 
