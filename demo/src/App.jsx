@@ -7,8 +7,8 @@ import { KabelwerkProvider, KabelwerkRoomScreen } from 'kabelwerk-react-native';
 
 import * as backend from './backend.js';
 import * as storage from './storage.js';
-import { ConfigScreen } from './ConfigScreen.jsx';
 import { HomeScreen } from './HomeScreen.jsx';
+import { SettingsScreen } from './SettingsScreen.jsx';
 
 // we do not really need react navigation for the demo, but we use it in order
 // to test our KabelwerkRoomScreen component
@@ -74,26 +74,30 @@ const App = function () {
           logging="info"
         >
           <Stack.Navigator>
-            <Stack.Screen name="home" options={{ title: 'Home' }}>
+            <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
               {(props) => <HomeScreen {...props} logout={logout} />}
             </Stack.Screen>
             <Stack.Screen
               name="chat-room"
               component={KabelwerkRoomScreen}
-              options={{ title: 'Chat' }}
+              options={{ title: 'Kabelwerk Chat' }}
             />
+            <Stack.Screen name="settings" options={{ title: 'Settings' }}>
+              {(props) => (
+                <SettingsScreen
+                  {...props}
+                  name={name}
+                  updateName={updateName}
+                />
+              )}
+            </Stack.Screen>
           </Stack.Navigator>
         </KabelwerkProvider>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="config" options={{ title: 'Configuration' }}>
+          <Stack.Screen name="settings" options={{ title: 'Settings' }}>
             {(props) => (
-              <ConfigScreen
-                {...props}
-                name={name}
-                token={token}
-                generateUser={generateUser}
-              />
+              <SettingsScreen {...props} name={name} updateName={updateName} />
             )}
           </Stack.Screen>
         </Stack.Navigator>
