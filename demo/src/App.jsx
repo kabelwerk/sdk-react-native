@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
 import { Alert } from 'react-native';
@@ -18,6 +19,9 @@ import { SettingsScreen } from './SettingsScreen.jsx';
 const Stack = createNativeStackNavigator();
 
 const App = function () {
+  // needed for handling clicking on notifications
+  const navigationRef = React.useRef();
+
   // the user's name
   const [name, setName] = React.useState('');
 
@@ -71,14 +75,62 @@ const App = function () {
       });
   }, []);
 
+  // show an alert whenever a Kabelwerk errors occurs
+  const handleError = React.useCallback((error) => {
+    Alert.alert('Something unexpected happened', error.message);
+  }, []);
+
+  // schedule a local notification showing incoming chat message
+  const handleLocalNotification = React.useCallback((message) => {
+    Notifications.scheduleNotificationAsync({
+      identifier: `message-${message.id}`,
+      content: {
+        title: message.user.name,
+        body: message.text,
+      },
+      trigger: null,
+    });
+  }, []);
+
+  // setup notifications
+  React.useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: () => {
+        const route = navigationRef.current.getCurrentRoute();
+
+        // do not show if we already are on the chat room screen
+        const doNotShow = route && route.name == 'chat-room';
+
+        return Promise.resolve({
+          shouldShowAlert: !doNotShow,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        });
+      },
+    });
+
+    // open the chat room screen when the user taps on a notification
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      () => {
+        navigationRef.current.navigate('chat-room');
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {token ? (
         <KabelwerkProvider
           url={backend.WEBSOCKET_URL}
           token={token}
           logging="info"
           userName={name}
+          onError={handleError}
+          onLocalNotification={handleLocalNotification}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>

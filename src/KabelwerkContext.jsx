@@ -15,6 +15,8 @@ const KabelwerkProvider = function ({
   ensureRooms = 'all',
   logging = 'silent',
   userName = undefined,
+  onError = undefined,
+  onLocalNotification = undefined,
 }) {
   // a number incremented each time the connection needs to be re-established
   // after having been closed by the OS
@@ -59,7 +61,9 @@ const KabelwerkProvider = function ({
       notifier.current = Kabelwerk.openNotifier();
 
       notifier.current.on('updated', ({ message }) => {
-        console.log(message);
+        if (onLocalNotification) {
+          onLocalNotification(message);
+        }
       });
 
       notifier.current.connect();
@@ -68,7 +72,9 @@ const KabelwerkProvider = function ({
     });
 
     Kabelwerk.on('error', (error) => {
-      console.log(error);
+      if (onError) {
+        onError(error);
+      }
     });
 
     Kabelwerk.connect();
@@ -88,7 +94,16 @@ const KabelwerkProvider = function ({
       setState(Kabelwerk.getState);
       setIsReady(false);
     };
-  }, [revivalsCount, url, token, refreshToken, ensureRooms, logging]);
+  }, [
+    revivalsCount,
+    url,
+    token,
+    refreshToken,
+    ensureRooms,
+    logging,
+    onError,
+    onLocalNotification,
+  ]);
 
   // update the connected user's name
   React.useEffect(() => {
