@@ -16,9 +16,9 @@ const KabelwerkProvider = function ({
   logging = 'silent',
   userName = undefined,
   onError = undefined,
-  onLocalNotification = undefined,
+  onNotification = undefined,
 }) {
-  // a number incremented each time the connection needs to be re-established
+  // an int incremented each time the connection needs to be re-established
   // after having been closed by the OS
   const [revivalsCount, setRevivalsCount] = React.useState(0);
 
@@ -57,25 +57,29 @@ const KabelwerkProvider = function ({
     Kabelwerk.on('connected', () => setState(Kabelwerk.getState));
     Kabelwerk.on('disconnected', () => setState(Kabelwerk.getState));
 
-    Kabelwerk.once('ready', () => {
-      notifier.current = Kabelwerk.openNotifier();
+    Kabelwerk.once('ready', ({ user }) => {
+      // setup the notifier object, if one is needed
+      if (onNotification) {
+        notifier.current = Kabelwerk.openNotifier();
 
-      notifier.current.on('updated', ({ message }) => {
-        if (onLocalNotification) {
-          onLocalNotification(message);
-        }
-      });
+        notifier.current.on('updated', ({ message }) => {
+          onNotification(message);
+        });
 
-      notifier.current.connect();
+        notifier.current.connect();
+      }
+
+      // update the connected user's name, if needed
+      if (userName && user.name != userName) {
+        Kabelwerk.updateUser({ name: userName });
+      }
 
       setIsReady(true);
     });
 
-    Kabelwerk.on('error', (error) => {
-      if (onError) {
-        onError(error);
-      }
-    });
+    if (onError) {
+      Kabelwerk.on('error', onError);
+    }
 
     Kabelwerk.connect();
     setState(Kabelwerk.getState);
@@ -102,15 +106,9 @@ const KabelwerkProvider = function ({
     ensureRooms,
     logging,
     onError,
-    onLocalNotification,
+    onNotification,
+    userName,
   ]);
-
-  // update the connected user's name
-  React.useEffect(() => {
-    if (isReady && userName && Kabelwerk.getUser().name != userName) {
-      Kabelwerk.updateUser({ name: userName });
-    }
-  }, [isReady, userName]);
 
   return (
     <KabelwerkContext.Provider value={{ state, isReady }}>

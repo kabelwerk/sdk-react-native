@@ -19,7 +19,7 @@ import { SettingsScreen } from './SettingsScreen.jsx';
 const Stack = createNativeStackNavigator();
 
 const App = function () {
-  // needed for handling clicking on notifications
+  // needed for handling tapping on notifications
   const navigationRef = React.useRef();
 
   // the user's name
@@ -81,7 +81,7 @@ const App = function () {
   }, []);
 
   // schedule a local notification showing incoming chat message
-  const handleLocalNotification = React.useCallback((message) => {
+  const triggerNotification = React.useCallback((message) => {
     Notifications.scheduleNotificationAsync({
       identifier: `message-${message.id}`,
       content: {
@@ -130,7 +130,7 @@ const App = function () {
           logging="info"
           userName={name}
           onError={handleError}
-          onLocalNotification={handleLocalNotification}
+          onNotification={triggerNotification}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
