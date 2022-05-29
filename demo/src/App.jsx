@@ -75,11 +75,6 @@ const App = function () {
       });
   }, []);
 
-  // show an alert whenever a Kabelwerk errors occurs
-  const handleError = React.useCallback((error) => {
-    Alert.alert('Something unexpected happened', error.message);
-  }, []);
-
   // schedule a local notification showing incoming chat message
   const triggerNotification = React.useCallback((message) => {
     Notifications.scheduleNotificationAsync({
@@ -129,7 +124,6 @@ const App = function () {
           token={token}
           logging="info"
           userName={name}
-          onError={handleError}
           onNotification={triggerNotification}
         >
           <Stack.Navigator>

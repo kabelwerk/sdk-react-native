@@ -1,3 +1,4 @@
+import { KabelwerkStatusBar } from 'kabelwerk-react-native';
 import React from 'react';
 import {
   Alert,
@@ -27,6 +28,8 @@ const SettingsScreen = function (props) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <KabelwerkStatusBar />
+
       <View style={styles.fields}>
         <View style={styles.fieldset}>
           <Text style={styles.label}>Name of the user</Text>

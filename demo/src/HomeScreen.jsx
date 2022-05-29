@@ -1,9 +1,12 @@
+import { KabelwerkStatusBar } from 'kabelwerk-react-native';
 import React from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 const HomeScreen = function ({ navigation, logout }) {
   return (
     <SafeAreaView style={styles.container}>
+      <KabelwerkStatusBar />
+
       <View style={styles.welcome}>
         <Text style={styles.welcomeHeading}>
           Welcome to the Kabelwerk demo app for React Native!

@@ -6,6 +6,7 @@ import { KabelwerkContext } from './KabelwerkContext.jsx';
 import { KabelwerkMessage } from './KabelwerkMessage.jsx';
 import { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
 import { KabelwerkMessageSeparator } from './KabelwerkMessageSeparator.jsx';
+import { KabelwerkStatusBar } from './KabelwerkStatusBar.jsx';
 import { toDateString } from './datetime.js';
 
 // expand the given list of chat items into the past with earlier messages,
@@ -165,6 +166,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
 
   return (
     <View style={styles.container}>
+      <KabelwerkStatusBar />
       <FlatList
         data={listItems}
         extraData={theirMarker}

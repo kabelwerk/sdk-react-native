@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   sendButton: {
-    marginRight: 8,
+    paddingRight: 8,
   },
   sendButtonText: {
     fontSize: 20,
