@@ -3,12 +3,14 @@
     "name": "Kabelwerk Demo",
     "owner": "kabelwerk",
     "slug": "demo",
+    "privacy": "public",
     "version": "0.0.0",
+    "githubUrl": "https://github.com/kabelwerk/sdk-react-native",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
