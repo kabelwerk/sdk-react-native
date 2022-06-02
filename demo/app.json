@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "Kabelwerk Demo",
-    "slug": "kabelwerk-react-native-demo",
+    "owner": "kabelwerk",
+    "slug": "demo",
     "version": "0.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
