@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Kabelwerk Demo",
+    "description": "Demo app showcasing the Kabelwerk SDK for React Native",
     "owner": "kabelwerk",
     "slug": "demo",
     "privacy": "public",

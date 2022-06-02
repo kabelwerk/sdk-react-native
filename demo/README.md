@@ -2,17 +2,14 @@
 
 A simple React Native app showcasing the Kabelwerk SDK for React Native.
 
-## Android
+## 🤖 Android
 
 To check out the Kabelwerk Demo app on Android:
 
 - Install the [Expo Go](https://play.google.com/store/apps/details?id=host.exp.exponent) app from Google Play Store.
-- Visit [expo.dev/@kabelwerk/demo](https://expo.dev/@kabelwerk/demo) and scan the QR code to open the latest demo build.
-- Scan the QR code below — also available at [expo.dev/@kabelwerk/demo](https://expo.dev/@kabelwerk/demo) — to open the latest demo build.
+- Scan the QR code — also available at [expo.dev/@kabelwerk/demo](https://expo.dev/@kabelwerk/demo) — to open the latest demo build. ![Expo Go QR code](expo-go-qr-code.svg)
 
-![Expo Go QR code](expo-go-qr-code.svg)
-
-## iOS
+## 🍎 iOS
 
 Due to restrictions of app distribution on iOS, you need to be explicitly invited to test the demo app:
 
@@ -20,7 +17,7 @@ Due to restrictions of app distribution on iOS, you need to be explicitly invite
 - Install the [Expo Go](https://apps.apple.com/app/apple-store/id982107779) app from Apple's App Store and login with your Expo account.
 - Open the latest demo build from the Profile tab of the Expo Go app.
 
-## Run locally
+## 🖥️ Run locally
 
 You can also run the app locally — on an emulator or a physical device connected to your computer:
 
