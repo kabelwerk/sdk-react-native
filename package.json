@@ -1,6 +1,6 @@
 {
   "name": "kabelwerk-react-native",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The Kabelwerk SDK for React Native.",
   "keywords": [
     "kabelwerk"
@@ -11,6 +11,13 @@
   },
   "license": "MIT",
   "author": "Kabelwerk <devs@kabelwerk.io> (https://kabelwerk.io)",
+  "files": [
+    "src/",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "README.md"
+  ],
   "main": "src/index.js",
   "type": "module",
   "repository": "github:kabelwerk/sdk-react-native",
