@@ -22,7 +22,7 @@ const SettingsScreen = function (props) {
         props.navigation.navigate('home');
       })
       .catch((error) => {
-        Alert.alert('Updating the user name failed', error.message);
+        Alert.alert('Error updating the user name', error.message);
       });
   };
 

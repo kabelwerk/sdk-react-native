@@ -1,6 +1,6 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
 import { KabelwerkMessage } from './KabelwerkMessage.jsx';
@@ -141,7 +141,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
           setListItems((listItems) => expandEarlier(listItems, messages));
         })
         .catch((error) => {
-          console.error(error);
+          Alert.alert('Error loading earlier messages', error.message);
         });
     }
   };
@@ -150,7 +150,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   const postMessage = function (params) {
     if (room.current) {
       room.current.postMessage(params).catch((error) => {
-        console.error(error);
+        Alert.alert('Error posting your last message', error.message);
       });
     }
   };

@@ -44,7 +44,7 @@ const App = function () {
       .then(storage.update)
       .then(loadConfig)
       .catch((error) => {
-        Alert.alert('Generating a user failed', error.message);
+        Alert.alert('Error generating a user', error.message);
       });
   }, []);
 
