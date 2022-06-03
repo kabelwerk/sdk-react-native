@@ -62,6 +62,13 @@ const KabelwerkProvider = function ({
       if (onNotification) {
         notifier.current = Kabelwerk.openNotifier();
 
+        notifier.current.on('ready', ({ messages }) => {
+          // the received messages are the newest first
+          for (let i = messages.length - 1; i >= 0; i--) {
+            onNotification(messages[i]);
+          }
+        });
+
         notifier.current.on('updated', ({ message }) => {
           onNotification(message);
         });
