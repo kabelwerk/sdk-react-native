@@ -147,13 +147,19 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   };
 
   // post a new message in the chat room
-  const postMessage = function (params) {
+  //
+  // handle errors here, but still return a promise so that the message form
+  // component knows whether to reset the text input
+  const postMessage = React.useCallback((params) => {
     if (room.current) {
-      room.current.postMessage(params).catch((error) => {
+      return room.current.postMessage(params).catch((error) => {
         Alert.alert('Error posting your last message', error.message);
+        return Promise.reject();
       });
+    } else {
+      return Promise.reject();
     }
-  };
+  }, []);
 
   // render a chat message or a horizontal separator with a date
   const renderItem = function ({ item }) {

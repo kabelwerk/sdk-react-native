@@ -11,11 +11,24 @@ const KabelwerkMessageForm = function ({ postMessage }) {
   // the value of the text input for posting new messages
   const [draft, setDraft] = React.useState('');
 
-  // post the drafted message and reset the text input
+  // whether the send button is enabled
+  const [buttonEnabled, setButtonEnabled] = React.useState(true);
+
+  // post the drafted message and reset the text input if it worked
+  //
+  // disable the send button while waiting for the server response
   const handleSend = function () {
     if (draft.length > 0) {
-      postMessage({ text: draft });
-      setDraft('');
+      setButtonEnabled(false);
+
+      postMessage({ text: draft })
+        .then(() => {
+          setDraft('');
+          setButtonEnabled(true);
+        })
+        .catch(() => {
+          setButtonEnabled(true);
+        });
     }
   };
 
@@ -30,7 +43,11 @@ const KabelwerkMessageForm = function ({ postMessage }) {
         onChangeText={setDraft}
       />
       {draft.length > 0 && (
-        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+        <TouchableOpacity
+          style={styles.sendButton}
+          disabled={!buttonEnabled}
+          onPress={handleSend}
+        >
           <Text style={styles.sendButtonText}>▶</Text>
         </TouchableOpacity>
       )}
