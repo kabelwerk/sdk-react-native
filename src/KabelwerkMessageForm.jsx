@@ -23,6 +23,7 @@ const KabelwerkMessageForm = function ({ postMessage }) {
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
+        maxLength={4096}
         multiline={true}
         placeholder="Message"
         value={draft}
@@ -42,17 +43,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     flexDirection: 'row',
+    paddingLeft: 16,
   },
   textInput: {
     flex: 1,
     fontSize: 18,
-    padding: 16,
+    marginVertical: 16,
+    paddingTop: 0, // on iOS there is a default padding
+    paddingBottom: 0,
   },
   sendButton: {
     paddingRight: 8,
   },
   sendButtonText: {
-    fontSize: 20,
+    fontSize: 22,
   },
 });
 
