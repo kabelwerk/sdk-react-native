@@ -40,7 +40,11 @@ const expandEarlier = function (listItems, messages) {
 
   // if we have reached the beginning of the chat room's history
   if (!messages.length && lastDate) {
-    listItems.push({ type: 'separator', id: lastDate, dateString: lastDate });
+    listItems.push({
+      type: 'separator',
+      id: lastDate,
+      dateString: lastDate,
+    });
   }
 
   return listItems;
@@ -133,7 +137,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   }, [isReady, roomId]);
 
   // fetch more messages from earlier in the chat history
-  const loadEarlierMessages = function () {
+  const loadEarlierMessages = React.useCallback(() => {
     if (room.current) {
       room.current
         .loadEarlier()
@@ -141,10 +145,13 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
           setListItems((listItems) => expandEarlier(listItems, messages));
         })
         .catch((error) => {
-          Alert.alert('Error loading earlier messages', error.message);
+          // only show the error if we are still on the same screen
+          if (room.current) {
+            Alert.alert('Error loading earlier messages', error.message);
+          }
         });
     }
-  };
+  }, []);
 
   // post a new message in the chat room
   //
@@ -175,8 +182,8 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
       <KabelwerkStatusBar />
       <FlatList
         data={listItems}
-        extraData={theirMarker}
         renderItem={renderItem}
+        extraData={theirMarker}
         inverted={true}
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
