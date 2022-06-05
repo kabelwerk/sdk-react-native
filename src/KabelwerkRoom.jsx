@@ -38,8 +38,9 @@ const expandEarlier = function (listItems, messages) {
     lastDate = message.dateString;
   }
 
-  // if we have reached the beginning of the chat room's history
-  if (!messages.length && lastDate) {
+  // if we have reached the beginning of the chat room's history or if this is
+  // the first batch of messages in the room
+  if ((!messages.length || listItems.length == messages.length) && lastDate) {
     listItems.push({
       type: 'separator',
       id: lastDate,
