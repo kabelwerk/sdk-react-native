@@ -2,6 +2,13 @@ import Kabelwerk from 'kabelwerk';
 import React from 'react';
 import { AppState } from 'react-native';
 
+import { VERSION } from './version.js';
+
+// config which is not changeable via the context's props
+Kabelwerk.config({
+  _agent: `sdk-react-native/${VERSION}`,
+});
+
 const KabelwerkContext = React.createContext({
   state: Kabelwerk.getState(),
   isReady: false,
