@@ -2,6 +2,7 @@ import Kabelwerk from 'kabelwerk';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { KabelwerkMarkup } from './KabelwerkMarkup.js';
 import { toTimeString } from './datetime.js';
 
 // return false if the other side's marker has moved over the message
@@ -22,7 +23,7 @@ const KabelwerkMessage = React.memo(function ({ message, theirMarker }) {
 
   return (
     <View style={[styles.container, isOurs ? styles.ours : styles.theirs]}>
-      <Text>{message.text}</Text>
+      <KabelwerkMarkup html={message.html} />
       <View style={styles.footer}>
         <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
         {isOurs && (
