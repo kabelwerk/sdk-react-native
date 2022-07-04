@@ -22,7 +22,7 @@
   "type": "module",
   "repository": "github:kabelwerk/sdk-react-native",
   "dependencies": {
-    "kabelwerk": "0.3.x"
+    "kabelwerk": "0.3.2"
   },
   "devDependencies": {
     "prettier": "^2.6.2"
