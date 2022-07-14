@@ -25,6 +25,7 @@
     "kabelwerk": "0.3.2"
   },
   "devDependencies": {
+    "jest": "^28.1.3",
     "prettier": "^2.6.2"
   },
   "peerDependencies": {
@@ -32,6 +33,7 @@
   },
   "scripts": {
     "prepack": "bash -c \"[[ $(grep -o -m 1 '[0-9].[0-9].[0-9]' package.json) == $(grep -o '[0-9].[0-9].[0-9]' src/version.js) ]]\"",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --config test/jest.config.js",
     "format": "prettier --write ."
   },
   "prettier": {
