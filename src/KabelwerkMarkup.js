@@ -1,12 +1,17 @@
 import React from 'react';
 import { Linking, Text } from 'react-native';
 
-const TAG_REGEX = /<(\/)?([a-z]+)(?:\shref="([^<"'>]+)" target=\"_blank\")?>/g;
+const TAG_REGEX = /<(?<closing>\/)?(?<tag>[a-z]+)(?<attrs>[^<>]+)*>/g;
+
+const ATTRS_REGEX = /(?<key>[a-z]+)="(?<value>[^<"'>\s]+)"/g;
 
 // a dict mapping html tags to functions creating react native components
 const ELEM_DICT = Object.freeze({
   p: (attrs, children) => {
-    return React.createElement(Text, null, children);
+    return React.createElement(Text, { style: { marginBottom: 8 } }, children);
+  },
+  br: (attrs, children) => {
+    return '\n';
   },
   em: (attrs, children) => {
     return React.createElement(
@@ -32,13 +37,13 @@ const ELEM_DICT = Object.freeze({
       children
     );
   },
-  unknown: (attrs, children) => {
+  _: (attrs, children) => {
     return React.createElement(Text, null, children);
   },
 });
 
 // convert an html string into a list of <Text> components — one for each <p>
-const convert = function (html) {
+const convert = function (html, elemDict) {
   // react native does not have string.matchAll(regex)
   const regex = new RegExp(TAG_REGEX);
 
@@ -56,49 +61,69 @@ const convert = function (html) {
 
   // add text to the element currently being assembled
   const pushText = function (text) {
-    stack[stack.length - 1].children.push(text);
+    if (stack.length) {
+      stack[stack.length - 1].children.push(text.replace(/\n/g, ''));
+    }
   };
 
   while ((match = regex.exec(html))) {
     if (match.index > index) {
-      pushText(html.slice(index, match.index));
+      let text = html.slice(index, match.index);
+      if (text.trim()) {
+        pushText(text);
+      }
     }
 
     index = match.index + match[0].length;
 
-    if (match[1]) {
-      // this is a closing tag
+    if (elemDict.hasOwnProperty(match[2])) {
+      if (match[1]) {
+        // this is a closing tag
 
-      let elem = stack.pop();
-      let component = ELEM_DICT[elem.tag](elem.attrs, elem.children);
+        let elem = stack.pop();
+        let component = elemDict[elem.tag](elem.attrs, elem.children);
 
-      if (stack.length) {
-        stack[stack.length - 1].children.push(component);
+        if (stack.length) {
+          stack[stack.length - 1].children.push(component);
+        } else {
+          output.push(component);
+        }
       } else {
-        output.push(component);
+        // this is either an opening or a self-closing tag
+
+        if (match[2] == 'br') {
+          stack[stack.length - 1].children.push('\n');
+        } else {
+          stack.push({
+            tag: match[2],
+            attrs: match[3] ? parseAttrs(match[3]) : null,
+            children: [],
+          });
+        }
       }
     } else {
-      // this is either an opening or a self-closing tag
-
-      if (match[2] == 'br') {
-        pushText('\n');
-      } else {
-        let tag = ELEM_DICT.hasOwnProperty(match[2]) ? match[2] : 'unknown';
-
-        stack.push({
-          tag: tag,
-          attrs: tag == 'a' ? { href: match[3] } : null,
-          children: [],
-        });
-      }
+      pushText(match[0]);
     }
   }
 
   return output;
 };
 
+// helper for the convert function above
+const parseAttrs = function (htmlAttrs) {
+  const regex = new RegExp(ATTRS_REGEX);
+  const attrs = Object.create(null);
+
+  let match;
+  while ((match = regex.exec(htmlAttrs))) {
+    attrs[match[1]] = match[2];
+  }
+
+  return attrs;
+};
+
 const KabelwerkMarkup = function ({ html }) {
-  return convert(html);
+  return convert(html, ELEM_DICT);
 };
 
 export { KabelwerkMarkup, convert };
