@@ -1,44 +1,57 @@
 import React from 'react';
 import { Linking, Text } from 'react-native';
 
-const TAG_REGEX = /<(?<closing>\/)?(?<tag>[a-z]+)(?<attrs>[^<>]+)*>/g;
+// regex matching html tags, both opening and closing
+//
+// capturing groups:
+//
+// - 1 → whether the tag is a closing one
+// - 2 → the tag itself
+// - 3 → the tag's attributes, if such
+//
+// we cannot use named capturing groups as these are not supported by hermes
+const TAG_REGEX = /<(\/)?([a-z]+)([^<>]+)*>/g;
 
-const ATTRS_REGEX = /(?<key>[a-z]+)="(?<value>[^<"'>\s]+)"/g;
+// regex matching html tag attributes
+// group 1 captures an attribute key, group 2 captures its value
+const ATTRS_REGEX = /([a-z]+)="([^<"'>\s]+)"/g;
 
 // a dict mapping html tags to functions creating react native components
-const ELEM_DICT = Object.freeze({
-  p: (attrs, children) => {
-    return React.createElement(Text, { style: { marginBottom: 8 } }, children);
-  },
-  br: (attrs, children) => {
-    return '\n';
-  },
-  em: (attrs, children) => {
+//
+// as react native cannot automatically assign keys to components created in
+// this manner, we use the index of the last char of the tag as key
+const ELEMENTS = Object.freeze({
+  p: function (_, children, index) {
     return React.createElement(
       Text,
-      { style: { fontStyle: 'italic' } },
+      { key: index, style: { marginBottom: 8 } },
       children
     );
   },
-  strong: (attrs, children) => {
+  em: function (_, children, index) {
     return React.createElement(
       Text,
-      { style: { fontWeight: 'bold' } },
+      { key: index, style: { fontStyle: 'italic' } },
       children
     );
   },
-  a: (attrs, children) => {
+  strong: function (_, children, index) {
+    return React.createElement(
+      Text,
+      { key: index, style: { fontWeight: 'bold' } },
+      children
+    );
+  },
+  a: function (attrs, children, index) {
     return React.createElement(
       Text,
       {
+        key: index,
         style: { textDecorationLine: 'underline' },
         onPress: () => Linking.openURL(attrs.href),
       },
       children
     );
-  },
-  _: (attrs, children) => {
-    return React.createElement(Text, null, children);
   },
 });
 
@@ -59,50 +72,50 @@ const convert = function (html, elemDict) {
   // the index of the last char that has been already parsed
   let index = 0;
 
-  // add text to the element currently being assembled
-  const pushText = function (text) {
+  // add a child to the stack's top element
+  // if the stack is empty, add directly to the output
+  const addChild = function (child) {
     if (stack.length) {
-      stack[stack.length - 1].children.push(text.replace(/\n/g, ''));
+      stack[stack.length - 1].children.push(child);
+    } else {
+      output.push(child);
     }
   };
 
+  // remove the newlines — only <br>'s can insert newlines
+  html = html.replace(/\n/g, '');
+
   while ((match = regex.exec(html))) {
     if (match.index > index) {
-      let text = html.slice(index, match.index);
-      if (text.trim()) {
-        pushText(text);
-      }
+      addChild(html.slice(index, match.index));
     }
 
     index = match.index + match[0].length;
 
-    if (elemDict.hasOwnProperty(match[2])) {
+    if (match[2] == 'br') {
+      addChild('\n');
+    } else if (elemDict.hasOwnProperty(match[2])) {
       if (match[1]) {
         // this is a closing tag
 
-        let elem = stack.pop();
-        let component = elemDict[elem.tag](elem.attrs, elem.children);
-
-        if (stack.length) {
-          stack[stack.length - 1].children.push(component);
-        } else {
-          output.push(component);
-        }
+        // take the stack's top element, convert it into the respective react
+        // native component, and add it as a child of the new stack top
+        const elem = stack.pop();
+        addChild(elemDict[elem.tag](elem.attrs, elem.children, index));
       } else {
-        // this is either an opening or a self-closing tag
+        // this must be an opening tag as the only self-closing tag we support
+        // is <br> — which is handled above
 
-        if (match[2] == 'br') {
-          stack[stack.length - 1].children.push('\n');
-        } else {
-          stack.push({
-            tag: match[2],
-            attrs: match[3] ? parseAttrs(match[3]) : null,
-            children: [],
-          });
-        }
+        // new element on top of the stack
+        stack.push({
+          tag: match[2],
+          attrs: match[3] ? parseAttrs(match[3]) : null,
+          children: [],
+        });
       }
     } else {
-      pushText(match[0]);
+      // this is an unrecognised tag
+      addChild(match[0]);
     }
   }
 
@@ -122,8 +135,14 @@ const parseAttrs = function (htmlAttrs) {
   return attrs;
 };
 
-const KabelwerkMarkup = function ({ html }) {
-  return convert(html, ELEM_DICT);
+const KabelwerkMarkup = function ({ html, elements }) {
+  let elemDict = ELEMENTS;
+
+  if (elements) {
+    elemDict = Object.assign({}, ELEMENTS, elements);
+  }
+
+  return convert(html, elemDict);
 };
 
 export { KabelwerkMarkup, convert };

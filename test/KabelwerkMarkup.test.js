@@ -1,17 +1,15 @@
 import { convert } from '../src/KabelwerkMarkup.js';
 
 describe('convert', () => {
-  const ELEM_DICT = {
+  const ELEMENTS = {
     p: (_, children) => ['p', ...children],
-    br: () => '\n',
     em: (_, children) => ['em', ...children],
     strong: (_, children) => ['strong', ...children],
     a: (attrs, children) => ['a', attrs.href, ...children],
-    _: (_, children) => ['_', ...children],
   };
 
   const match = (html, output) => {
-    expect(convert(html, ELEM_DICT)).toEqual(output);
+    expect(convert(html, ELEMENTS)).toEqual(output);
   };
 
   test('special chars', () => {
