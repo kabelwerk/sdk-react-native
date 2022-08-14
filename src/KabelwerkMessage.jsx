@@ -1,6 +1,12 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 
 import { KabelwerkMarkup } from './KabelwerkMarkup.js';
 import { toTimeString } from './datetime.js';
@@ -18,12 +24,33 @@ const areEqual = function (prevProps, nextProps) {
 };
 
 const KabelwerkMessage = React.memo(function ({ message, theirMarker }) {
+  const windowDimensions = useWindowDimensions();
+
   const isOurs = message.user.id == Kabelwerk.getUser().id;
   const isMarked = isOurs && theirMarker >= message.id;
 
   return (
-    <View style={[styles.container, isOurs ? styles.ours : styles.theirs]}>
-      <KabelwerkMarkup html={message.html} />
+    <View
+      style={[
+        styles.container,
+        isOurs ? styles.ours : styles.theirs,
+        message.type == 'text' ? styles.text : undefined,
+      ]}
+    >
+      {message.type == 'image' ? (
+        <Image
+          resizeMethod="scale"
+          resizeMode="contain"
+          source={{
+            uri: message.upload.preview.url,
+            width: message.upload.preview.width,
+            height: message.upload.preview.height,
+          }}
+          style={inferImageStyles(message.upload.preview, windowDimensions)}
+        />
+      ) : (
+        <KabelwerkMarkup html={message.html} />
+      )}
       <View style={styles.footer}>
         <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
         {isOurs && (
@@ -41,7 +68,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     marginTop: 16,
-    maxWidth: '80%',
     padding: 16,
   },
   ours: {
@@ -49,6 +75,9 @@ const styles = StyleSheet.create({
   },
   theirs: {
     alignSelf: 'flex-start',
+  },
+  text: {
+    maxWidth: '80%',
   },
   footer: {
     flexDirection: 'row',
@@ -67,5 +96,16 @@ const styles = StyleSheet.create({
     marginLeft: -4,
   },
 });
+
+// determine the width and height of an <Image> based on the screen width
+const inferImageStyles = function (image, screen) {
+  const factor = screen.width * 0.8 >= image.width ? 1 : 0.5;
+
+  return {
+    height: image.height * factor,
+    marginBottom: 8,
+    width: image.width * factor,
+  };
+};
 
 export { KabelwerkMessage };
