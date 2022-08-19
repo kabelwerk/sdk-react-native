@@ -7,27 +7,61 @@ import {
   View,
 } from 'react-native';
 
-const KabelwerkMessageForm = function ({ postMessage }) {
+import { KabelwerkContext } from './KabelwerkContext.jsx';
+
+const KabelwerkMessageForm = function ({ postMessage, postUpload }) {
+  const { pickImage } = React.useContext(KabelwerkContext);
+
   // the value of the text input for posting new messages
   const [draft, setDraft] = React.useState('');
 
-  // whether the send button is enabled
-  const [buttonEnabled, setButtonEnabled] = React.useState(true);
+  // whether the send and upload buttons are enabled
+  const [buttonsEnabled, setButtonsEnabled] = React.useState(true);
 
   // post the drafted message and reset the text input if it worked
   //
-  // disable the send button while waiting for the server response
-  const handleSend = function () {
+  // disable the send buttons while waiting for the server response
+  const postTextMessage = function () {
     if (draft.length > 0) {
-      setButtonEnabled(false);
+      setButtonsEnabled(false);
 
       postMessage({ text: draft })
         .then(() => {
           setDraft('');
-          setButtonEnabled(true);
+          setButtonsEnabled(true);
         })
         .catch(() => {
-          setButtonEnabled(true);
+          // KabelwerkRoom takes care of showing an alert to the user if the
+          // server rejects the push or times out
+        })
+        .finally(() => {
+          setButtonsEnabled(true);
+        });
+    }
+  };
+
+  // open the image picker for the user to select a file, upload the selected
+  // file, and post an image message with the upload
+  //
+  // disable the send buttons until the promise chain resolves
+  const postImageMessage = function () {
+    if (pickImage) {
+      setButtonsEnabled(false);
+
+      pickImage()
+        .then((file) => {
+          return postUpload(file);
+        })
+        .then((upload) => {
+          return postMessage({ uploadId: upload.id });
+        })
+        .catch(() => {
+          // if we end up here, it means that either the user closed the image
+          // picker without selecting a file or that there has been an error —
+          // in which case KabelwerkRoom takes care of showing an alert
+        })
+        .finally(() => {
+          setButtonsEnabled(true);
         });
     }
   };
@@ -42,14 +76,24 @@ const KabelwerkMessageForm = function ({ postMessage }) {
         value={draft}
         onChangeText={setDraft}
       />
-      {draft.length > 0 && (
+      {draft.length ? (
         <TouchableOpacity
           style={styles.sendButton}
-          disabled={!buttonEnabled}
-          onPress={handleSend}
+          disabled={!buttonsEnabled}
+          onPress={postTextMessage}
         >
           <Text style={styles.sendButtonText}>▶</Text>
         </TouchableOpacity>
+      ) : (
+        pickImage && (
+          <TouchableOpacity
+            style={styles.sendButton}
+            disabled={!buttonsEnabled}
+            onPress={postImageMessage}
+          >
+            <Text style={styles.sendButtonText}>▲</Text>
+          </TouchableOpacity>
+        )
       )}
     </View>
   );

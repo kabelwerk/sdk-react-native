@@ -169,6 +169,18 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
     }
   }, []);
 
+  // post a new upload in the chat room
+  const postUpload = React.useCallback((file) => {
+    if (room.current) {
+      return room.current.postUpload(file).catch((error) => {
+        Alert.alert('Error uploading your file', error.message);
+        return Promise.reject();
+      });
+    } else {
+      return Promise.reject();
+    }
+  }, []);
+
   // render a chat message or a horizontal separator with a date
   const renderItem = function ({ item }) {
     if (item.type == 'separator') {
@@ -189,7 +201,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
       />
-      <KabelwerkMessageForm postMessage={postMessage} />
+      <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
     </View>
   );
 };

@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import * as DocumentPicker from 'expo-document-picker';
 import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
@@ -116,6 +117,24 @@ const App = function () {
     };
   }, []);
 
+  // call the chosen image picker dependency
+  const pickImage = React.useCallback(() => {
+    return DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: false,
+      type: ['image/jpeg', 'image/png'],
+    }).then((result) => {
+      if (result.type == 'cancel') {
+        return Promise.reject();
+      }
+
+      return {
+        name: result.name,
+        type: result.mimeType,
+        uri: result.uri,
+      };
+    });
+  }, []);
+
   return (
     <NavigationContainer ref={navigationRef}>
       {token ? (
@@ -125,6 +144,7 @@ const App = function () {
           logging="info"
           userName={name}
           onNotification={triggerNotification}
+          pickImage={pickImage}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
