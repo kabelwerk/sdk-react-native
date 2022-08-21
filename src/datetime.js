@@ -11,4 +11,16 @@ const toTimeString = function (d) {
   return d.toTimeString().substring(0, 5);
 };
 
-export { toDateString, toTimeString };
+// call one of the above depending on whether the datetime is today
+const toDateOrTimeString = function (d) {
+  const today = toDateString(new Date());
+  const dateString = toDateString(d);
+
+  if (dateString == today) {
+    return toTimeString(d);
+  } else {
+    return dateString;
+  }
+};
+
+export { toDateString, toTimeString, toDateOrTimeString };

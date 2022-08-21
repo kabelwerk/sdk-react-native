@@ -18,7 +18,7 @@ const HomeScreen = function ({ navigation, logout }) {
         <Text style={styles.welcomeText}>
           You could update the user's name via the settings, or you could reset
           the auth token and generate a new demo user. But most importantly, you
-          can open the chat screen!
+          can explore the chat screens!
         </Text>
       </View>
 
@@ -26,6 +26,10 @@ const HomeScreen = function ({ navigation, logout }) {
         <Button
           title="Open chat"
           onPress={() => navigation.navigate('chat-room')}
+        />
+        <Button
+          title="Open inbox"
+          onPress={() => navigation.navigate('inbox')}
         />
         <Button
           title="Settings"

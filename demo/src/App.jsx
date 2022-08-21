@@ -7,7 +7,11 @@ import { Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { KabelwerkProvider, KabelwerkRoomScreen } from 'kabelwerk-react-native';
+import {
+  KabelwerkInbox,
+  KabelwerkProvider,
+  KabelwerkRoomScreen,
+} from 'kabelwerk-react-native';
 
 import * as backend from './backend.js';
 import * as storage from './storage.js';
@@ -149,6 +153,16 @@ const App = function () {
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
               {(props) => <HomeScreen {...props} logout={logout} />}
+            </Stack.Screen>
+            <Stack.Screen name="inbox" options={{ title: 'Kabelwerk Inbox' }}>
+              {(props) => (
+                <KabelwerkInbox
+                  {...props}
+                  onItemPress={(roomId) =>
+                    navigationRef.current.navigate('chat-room', { roomId })
+                  }
+                />
+              )}
             </Stack.Screen>
             <Stack.Screen
               name="chat-room"
