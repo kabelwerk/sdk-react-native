@@ -6,7 +6,7 @@ The `<KabelwerkInbox>` component is usually only needed when you have more than 
 
 ## Example
 
-```js
+```jsx
 <KabelwerkInbox onItemPress={(roomId) => navigate('chat-room', { roomId })} />
 ```
 

@@ -6,7 +6,7 @@ The SDK components depend on the context.
 
 ## Example
 
-```js
+```jsx
 <KabelwerkProvider
   url={'myapp.kabelwerk.io'}
   refreshToken={fetchAuthToken}

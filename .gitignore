@@ -1,2 +1,7 @@
 # dependencies
 /node_modules/
+/website/node_modules/
+
+# website build files
+/website/build/
+/website/.docusaurus/
