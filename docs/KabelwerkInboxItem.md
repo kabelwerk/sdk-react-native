@@ -1,4 +1,4 @@
-# KabelwerkInboxItem
+# Kabelwerk Inbox Item
 
 The `<KabelwerkInboxItem>` component displays information about a chat room and the latest message in that room (if there is such).
 
@@ -16,4 +16,4 @@ Called when the component is pressed by the user.
 
 ## See also
 
-- [KabelwerkInbox](./KabelwerkInbox.md)
+- [Kabelwerk Inbox](./KabelwerkInbox.md)

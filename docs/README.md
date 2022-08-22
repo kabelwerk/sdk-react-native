@@ -16,9 +16,15 @@ The SDK builds on top of — and includes as a dependency — the [Kabelwerk SDK
 
 ## Contexts
 
-- [KabelwerkContext](./KabelwerkContext.md)
+- [Kabelwerk Context](./KabelwerkContext.md)
 
 ## Components
 
-- [KabelwerkInbox](./KabelwerkInbox.md)
-- [KabelwerkInboxItem](./KabelwerkInboxItem.md)
+- [Kabelwerk Inbox](./KabelwerkInbox.md)
+- [Kabelwerk Inbox Item](./KabelwerkInboxItem.md)
+- [Kabelwerk Room](./KabelwerkRoom.md)
+- [Kabelwerk Status Bar](./KabelwerkStatusBar.md)
+
+## Screens
+
+- [Kabelwerk Room Screen](./KabelwerkRoomScreen.md)

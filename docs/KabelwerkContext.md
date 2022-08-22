@@ -1,4 +1,4 @@
-# KabelwerkContext
+# Kabelwerk Context
 
 The Kabelwerk context takes care of opening and maintaining the websocket connection to the Kabelwerk backend — also across [AppState](https://reactnative.dev/docs/appstate) changes.
 
@@ -25,7 +25,13 @@ The URL of the Kabelwerk backend to connect to.
 
 ### `token`
 
-A [JWT](https://datatracker.ietf.org/doc/html/rfc7519) token which (1) is signed by an RSA key the public counterpart of which is known to the Kabelwerk backend you are connecting to; (2) includes a `sub` claim identifying the user on behalf of whom the connection is established; and (3) includes a valid `exp` claim. The value of the `sub` claim is stored on the Kabelwerk backend as the respective user's key.
+A [JWT](https://datatracker.ietf.org/doc/html/rfc7519) token which:
+
+- is signed by an RSA key the public counterpart of which is known to the Kabelwerk backend you are connecting to;
+- includes a `sub` claim identifying the user on behalf of whom the connection is established;
+- includes a valid `exp` claim.
+
+The value of the `sub` claim is stored on the Kabelwerk backend as the respective user's key.
 
 ### `refreshToken`
 
@@ -53,4 +59,5 @@ Called when a new message is posted in any of the rooms of the connected user (o
 
 ## See also
 
-- [KabelwerkInbox](./KabelwerkInbox.md)
+- [Kabelwerk Inbox](./KabelwerkInbox.md)
+- [Kabelwerk Room](./KabelwerkRoom.md)

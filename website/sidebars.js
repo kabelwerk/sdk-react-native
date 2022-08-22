@@ -11,7 +11,19 @@ const sidebars = {
     {
       type: 'category',
       label: 'Components',
-      items: ['KabelwerkInbox', 'KabelwerkInboxItem'],
+      items: [
+        'KabelwerkInbox',
+        'KabelwerkInboxItem',
+        'KabelwerkRoom',
+        'KabelwerkStatusBar',
+      ],
+      collapsible: true,
+      collapsed: false,
+    },
+    {
+      type: 'category',
+      label: 'Screens',
+      items: ['KabelwerkRoomScreen'],
       collapsible: true,
       collapsed: false,
     },
