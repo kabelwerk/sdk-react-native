@@ -77,7 +77,30 @@ const expandNew = function (listItems, message) {
   return items.concat(listItems);
 };
 
-const KabelwerkRoom = function ({ roomId = 0 }) {
+// the default function for rendering the chat messages in a room
+const renderKabelwerkMessage = function (message, theirMarker) {
+  return <KabelwerkMessage message={message} theirMarker={theirMarker} />;
+};
+
+// the default function for rendering the separators between messages posted on
+// different dates
+const renderKabelwerkMessageSeparator = function (item) {
+  return <KabelwerkMessageSeparator separator={item} />;
+};
+
+// the default function for rendering the form for posting messages in a room
+const renderKabelwerkMessageForm = function (postMessage, postUpload) {
+  return (
+    <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
+  );
+};
+
+const KabelwerkRoom = function ({
+  roomId = 0,
+  renderMessage = renderKabelwerkMessage,
+  renderMessageSeparator = renderKabelwerkMessageSeparator,
+  renderMessageForm = renderKabelwerkMessageForm,
+}) {
   const { isReady } = React.useContext(KabelwerkContext);
 
   // the Kabelwerk room object
@@ -184,9 +207,9 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
   // render a chat message or a horizontal separator with a date
   const renderItem = function ({ item }) {
     if (item.type == 'separator') {
-      return <KabelwerkMessageSeparator separator={item} />;
+      return renderMessageSeparator(item);
     } else {
-      return <KabelwerkMessage message={item} theirMarker={theirMarker} />;
+      return renderMessage(item, theirMarker);
     }
   };
 
@@ -201,7 +224,7 @@ const KabelwerkRoom = function ({ roomId = 0 }) {
         style={styles.flatList}
         onEndReached={loadEarlierMessages}
       />
-      <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
+      {renderMessageForm(postMessage, postUpload)}
     </View>
   );
 };

@@ -6,7 +6,15 @@ import { KabelwerkContext } from './KabelwerkContext.jsx';
 import { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
 import { KabelwerkStatusBar } from './KabelwerkStatusBar.jsx';
 
-const KabelwerkInbox = function ({ onItemPress }) {
+// the default function for rendering the inbox items of an inbox
+const renderKabelwerkInboxItem = function (item, onPress) {
+  return <KabelwerkInboxItem item={item} onPress={onPress} />;
+};
+
+const KabelwerkInbox = function ({
+  renderInboxItem = renderKabelwerkInboxItem,
+  onInboxItemPress = () => {},
+}) {
   const { isReady } = React.useContext(KabelwerkContext);
 
   // the Kabelwerk inbox object
@@ -45,12 +53,7 @@ const KabelwerkInbox = function ({ onItemPress }) {
 
   // render an inbox item component
   const renderItem = function ({ item }) {
-    return (
-      <KabelwerkInboxItem
-        item={item}
-        onPress={() => onItemPress(item.room.id)}
-      />
-    );
+    return renderInboxItem(item, () => onInboxItemPress(item.room.id));
   };
 
   return (

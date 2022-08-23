@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
   KabelwerkInbox,
+  KabelwerkMessageForm,
   KabelwerkProvider,
   KabelwerkRoomScreen,
 } from 'kabelwerk-react-native';
@@ -148,7 +149,6 @@ const App = function () {
           logging="info"
           userName={name}
           onNotification={triggerNotification}
-          pickImage={pickImage}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
@@ -158,7 +158,7 @@ const App = function () {
               {(props) => (
                 <KabelwerkInbox
                   {...props}
-                  onItemPress={(roomId) =>
+                  onInboxItemPress={(roomId) =>
                     navigationRef.current.navigate('chat-room', { roomId })
                   }
                 />
@@ -166,9 +166,21 @@ const App = function () {
             </Stack.Screen>
             <Stack.Screen
               name="chat-room"
-              component={KabelwerkRoomScreen}
               options={{ title: 'Kabelwerk Chat' }}
-            />
+            >
+              {(props) => (
+                <KabelwerkRoomScreen
+                  {...props}
+                  renderMessageForm={(postMessage, postUpload) => (
+                    <KabelwerkMessageForm
+                      postMessage={postMessage}
+                      postUpload={postUpload}
+                      pickImage={pickImage}
+                    />
+                  )}
+                />
+              )}
+            </Stack.Screen>
             <Stack.Screen name="settings" options={{ title: 'Settings' }}>
               {(props) => (
                 <SettingsScreen

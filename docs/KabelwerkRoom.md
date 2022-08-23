@@ -5,7 +5,16 @@ The `<KabelwerkRoom>` component renders a chat room.
 ## Example
 
 ```jsx
-<KabelwerkRoom roomId={roomId} />
+<KabelwerkRoom
+  roomId={roomId}
+  renderMessage={(message) => <KabelwerkMessage message={message} />}
+  renderMessageSeparator={(separator) => (
+    <KabelwerkMessageSeparator separator={separator} />
+  )}
+  renderMessageForm={(postMessage) => (
+    <KabelwerkMessageForm postMessage={postMessage} />
+  )}
+/>
 ```
 
 ## Props
@@ -13,3 +22,19 @@ The `<KabelwerkRoom>` component renders a chat room.
 ### `roomId`
 
 The ID of the room to render. If this prop is not set, a random room belonging to the connected user will be rendered — which is useful when you have a single hub.
+
+### `renderMessage`
+
+The function used to render the chat messages in the room. The default is to render a `<KabelwerkMessage>` component.
+
+### `renderMessageSeparator`
+
+The function used to render the separators between messages posted on different dates. The default is to render a `<KabelwerkMessageSeparator>` component.
+
+### `renderMessageForm`
+
+The function used to render the form for posting new messages. The default is to render a `<KabelwerkMessageForm>` component.
+
+## See also
+
+- [Kabelwerk Room Screen](./KabelwerkRoomScreen.md)

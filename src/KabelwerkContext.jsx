@@ -12,7 +12,6 @@ Kabelwerk.config({
 const KabelwerkContext = React.createContext({
   state: Kabelwerk.getState(),
   isReady: false,
-  pickImage: undefined,
 });
 
 const KabelwerkProvider = function ({
@@ -25,7 +24,6 @@ const KabelwerkProvider = function ({
   userName = undefined,
   onError = undefined,
   onNotification = undefined,
-  pickImage = undefined,
 }) {
   // an int incremented each time the connection needs to be re-established
   // after having been closed by the OS
@@ -127,7 +125,7 @@ const KabelwerkProvider = function ({
   ]);
 
   return (
-    <KabelwerkContext.Provider value={{ state, isReady, pickImage }}>
+    <KabelwerkContext.Provider value={{ state, isReady }}>
       {children}
     </KabelwerkContext.Provider>
   );

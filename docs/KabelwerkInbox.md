@@ -7,14 +7,23 @@ The `<KabelwerkInbox>` component is usually only needed when you have more than 
 ## Example
 
 ```jsx
-<KabelwerkInbox onItemPress={(roomId) => navigate('chat-room', { roomId })} />
+<KabelwerkInbox
+  renderInboxItem={(inboxItem, onPress) => (
+    <KabelwerkInboxItem item={inboxItem} onPress={onPress} />
+  )}
+  onInboxItemPress={(roomId) => navigate('chat-room', { roomId })}
+/>
 ```
 
 ## Props
 
-### `onItemPress`
+### `renderInboxItem`
 
-Called when the user presses an inbox item component.
+The function used to render the inbox items. The default is to render an [`<KabelwerkInboxItem>`](./KabelwerkInboxItem.md) component.
+
+### `onInboxItemPress`
+
+Called when the user presses an inbox item component — with the room ID of the respective inbox item. The rather unhelpful default is to do nothing.
 
 ## See also
 

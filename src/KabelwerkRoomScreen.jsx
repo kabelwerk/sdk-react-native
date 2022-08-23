@@ -22,7 +22,7 @@ import { KabelwerkRoom } from './KabelwerkRoom.jsx';
 // write one's own wrapper than one's own room component
 //
 // the room ID from the route is forwarded to the wrapped room component
-const KabelwerkRoomScreen = function ({ route }) {
+const KabelwerkRoomScreen = function ({ navigation, route, ...roomProps }) {
   const roomId =
     route.params && 'roomId' in route.params ? route.params.roomId : 0;
 
@@ -82,7 +82,7 @@ const KabelwerkRoomScreen = function ({ route }) {
 
   return (
     <SafeAreaView style={{ flex: 1, bottom: offsetBottom }}>
-      <KabelwerkRoom roomId={roomId} />
+      <KabelwerkRoom roomId={roomId} {...roomProps} />
     </SafeAreaView>
   );
 };

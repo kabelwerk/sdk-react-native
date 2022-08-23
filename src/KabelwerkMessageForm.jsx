@@ -7,11 +7,11 @@ import {
   View,
 } from 'react-native';
 
-import { KabelwerkContext } from './KabelwerkContext.jsx';
-
-const KabelwerkMessageForm = function ({ postMessage, postUpload }) {
-  const { pickImage } = React.useContext(KabelwerkContext);
-
+const KabelwerkMessageForm = function ({
+  postMessage,
+  postUpload,
+  pickImage = undefined,
+}) {
   // the value of the text input for posting new messages
   const [draft, setDraft] = React.useState('');
 
