@@ -5,6 +5,7 @@
   "keywords": [
     "kabelwerk"
   ],
+  "homepage": "https://docs.kabelwerk.io/react-native/",
   "bugs": {
     "url": "https://github.com/kabelwerk/sdk-react-native/issues",
     "email": "devs@kabelwerk.io"
@@ -12,6 +13,7 @@
   "license": "MIT",
   "author": "Kabelwerk <devs@kabelwerk.io> (https://kabelwerk.io)",
   "files": [
+    "docs/",
     "src/",
     "CHANGELOG.md",
     "CONTRIBUTING.md",

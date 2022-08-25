@@ -7,7 +7,29 @@ Most probably you will not directly use the `<KabelwerkMessageForm>` component i
 ## Example
 
 ```jsx
-<KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
+// example with expo-document-picker
+const pickImage = function () {
+  return DocumentPicker.getDocumentAsync({
+    copyToCacheDirectory: false,
+    type: ['image/jpeg', 'image/png'],
+  }).then((result) => {
+    if (result.type == 'cancel') {
+      return Promise.reject();
+    }
+
+    return {
+      name: result.name,
+      type: result.mimeType,
+      uri: result.uri,
+    };
+  });
+};
+
+<KabelwerkMessageForm
+  postMessage={postMessage}
+  postUpload={postUpload}
+  pickImage={pickImage}
+/>;
 ```
 
 ## Props
@@ -22,7 +44,7 @@ Called when the user intends to upload a new file in the chat room via the form.
 
 ### `pickImage`
 
-Called when the user intends to pick an image for uploading in the chat room. Called without arguments, it should return a Promise which resolves into an `{ uri }` object — which can then be uploaded to the Kabelwerk backend via the `postUpload` callback.
+Called when the user intends to pick an image for uploading in the chat room. Called without arguments, the function should return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which resolves into an `{ name, type, uri }` object — which can then be uploaded to the Kabelwerk backend via the `postUpload` callback.
 
 ## See also
 

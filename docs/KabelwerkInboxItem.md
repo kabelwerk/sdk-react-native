@@ -4,6 +4,12 @@ The `<KabelwerkInboxItem>` component displays information about a chat room and 
 
 Most probably you will not directly use the `<KabelwerkInboxItem>` component in your code — on the contrary, it is likely that you will want to replace it with a component of your own.
 
+## Example
+
+```jsx
+<KabelwerkInboxItem item={item} onPress={onPress} />
+```
+
 ## Props
 
 ### `item`

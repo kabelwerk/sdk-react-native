@@ -7,7 +7,9 @@ The `<KabelwerkRoom>` component renders a chat room.
 ```jsx
 <KabelwerkRoom
   roomId={42}
-  renderMessage={(message) => <KabelwerkMessage message={message} />}
+  renderMessage={(message, theirMarker) => (
+    <KabelwerkMessage message={message} theirMarker={theirMarker} />
+  )}
   renderMessageSeparator={(date) => <KabelwerkMessageSeparator date={date} />}
   renderMessageForm={(postMessage, postUpload) => (
     <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />

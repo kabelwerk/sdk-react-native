@@ -23,6 +23,10 @@ The room ID from the route is forwarded to the wrapped room component.
 </NavigationContainer>
 ```
 
+## Props
+
+All props except for React Navigation's [route](https://reactnavigation.org/docs/route-prop) and [navigation](https://reactnavigation.org/docs/navigation-prop) props are forwarded to the wrapped [`<KabelwerkRoom>`](./KabelwerkRoom.md) component.
+
 ## See also
 
 - [Kabelwerk Room](./KabelwerkRoom.md)

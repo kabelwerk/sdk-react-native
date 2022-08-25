@@ -14,6 +14,10 @@ Releases follow semantic versioning. Make sure to check the [CHANGELOG.md](./CHA
 
 The SDK builds on top of (and includes as a dependency) the [Kabelwerk SDK for JavaScript](https://docs.kabelwerk.io/js/).
 
+## Documentation
+
+Documentation — including API reference and code examples — can be found at [docs.kabelwerk.io](https://docs.kabelwerk.io/react-native/).
+
 ## Contributing
 
 Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) if you have found a bug or if you want to setup the project locally.

@@ -7,7 +7,7 @@ Most probably you will not directly use the `<KabelwerkMessage>` component in yo
 ## Example
 
 ```jsx
-<KabelwerkMessage message={message} />
+<KabelwerkMessage message={message} theirMarker={42} />
 ```
 
 ## Props
@@ -15,6 +15,10 @@ Most probably you will not directly use the `<KabelwerkMessage>` component in yo
 ### `message`
 
 A chat message object. Please refer to the [JavaScript SDK docs](https://docs.kabelwerk.io/js/messages) for more information about chat message objects.
+
+### `theirMarker`
+
+The ID of the latest message marked by someone on the hub side. This is used to determine the number of checkmarks shown in the bottom right corner of messages posted by the connected user.
 
 ## See also
 
