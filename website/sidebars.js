@@ -14,6 +14,10 @@ const sidebars = {
       items: [
         'KabelwerkInbox',
         'KabelwerkInboxItem',
+        'KabelwerkMarkup',
+        'KabelwerkMessage',
+        'KabelwerkMessageForm',
+        'KabelwerkMessageSeparator',
         'KabelwerkRoom',
         'KabelwerkStatusBar',
       ],

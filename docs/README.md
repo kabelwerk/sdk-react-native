@@ -22,6 +22,10 @@ The SDK builds on top of — and includes as a dependency — the [Kabelwerk SDK
 
 - [Kabelwerk Inbox](./KabelwerkInbox.md)
 - [Kabelwerk Inbox Item](./KabelwerkInboxItem.md)
+- [Kabelwerk Markup](./KabelwerkMarkup.md)
+- [Kabelwerk Message](./KabelwerkMessage.md)
+- [Kabelwerk Message Form](./KabelwerkMessageForm.md)
+- [Kabelwerk Message Separator](./KabelwerkMessageSeparator.md)
 - [Kabelwerk Room](./KabelwerkRoom.md)
 - [Kabelwerk Status Bar](./KabelwerkStatusBar.md)
 
