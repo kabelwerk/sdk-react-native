@@ -7,8 +7,14 @@ Most probably you will not directly use the `<KabelwerkMessageSeparator>` compon
 ## Example
 
 ```jsx
-<KabelwerkMessageSeparator />
+<KabelwerkMessageSeparator date="2022-08-25" />
 ```
+
+## Props
+
+### `date`
+
+A date as a string in `YYYY-MM-DD` format.
 
 ## See also
 

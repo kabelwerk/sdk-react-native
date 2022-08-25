@@ -84,8 +84,8 @@ const renderKabelwerkMessage = function (message, theirMarker) {
 
 // the default function for rendering the separators between messages posted on
 // different dates
-const renderKabelwerkMessageSeparator = function (item) {
-  return <KabelwerkMessageSeparator separator={item} />;
+const renderKabelwerkMessageSeparator = function (dateString) {
+  return <KabelwerkMessageSeparator date={dateString} />;
 };
 
 // the default function for rendering the form for posting messages in a room
@@ -207,7 +207,7 @@ const KabelwerkRoom = function ({
   // render a chat message or a horizontal separator with a date
   const renderItem = function ({ item }) {
     if (item.type == 'separator') {
-      return renderMessageSeparator(item);
+      return renderMessageSeparator(item.dateString);
     } else {
       return renderMessage(item, theirMarker);
     }

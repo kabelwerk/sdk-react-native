@@ -8,7 +8,7 @@ Most probably you will not directly use the `<KabelwerkInboxItem>` component in 
 
 ### `item`
 
-An inbox item object.
+An inbox item object. Please refer to the [JavaScript SDK docs](https://docs.kabelwerk.io/js/inboxes) for more information about inbox item objects.
 
 ### `onPress`
 

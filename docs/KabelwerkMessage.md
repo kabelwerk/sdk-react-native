@@ -14,7 +14,7 @@ Most probably you will not directly use the `<KabelwerkMessage>` component in yo
 
 ### `message`
 
-The chat message to render.
+A chat message object. Please refer to the [JavaScript SDK docs](https://docs.kabelwerk.io/js/messages) for more information about chat message objects.
 
 ## See also
 

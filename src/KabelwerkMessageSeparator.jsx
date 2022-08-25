@@ -6,10 +6,10 @@ const areEqual = function (prevProps, nextProps) {
   return true;
 };
 
-const KabelwerkMessageSeparator = React.memo(function ({ separator }) {
+const KabelwerkMessageSeparator = React.memo(function ({ date }) {
   return (
     <View style={styles.container}>
-      <Text>&mdash; {separator.dateString} &mdash;</Text>
+      <Text>&mdash; {date} &mdash;</Text>
     </View>
   );
 }, areEqual);
