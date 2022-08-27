@@ -2,38 +2,34 @@ import { KabelwerkStatusBar } from 'kabelwerk-react-native';
 import React from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-const HomeScreen = function ({ navigation, logout }) {
+const HomeScreen = function ({ navigation, name, logout }) {
   return (
     <SafeAreaView style={styles.container}>
       <KabelwerkStatusBar />
 
       <View style={styles.welcome}>
         <Text style={styles.welcomeHeading}>
-          Welcome to the Kabelwerk demo app for React Native!
+          Welcome to Kabelwerk's React Native demo app!
         </Text>
         <Text style={styles.welcomeText}>
-          A demo user has been automatically generated for you and its auth
-          token is persisted in the device's local storage.
+          You are connected as <Text style={styles.name}>{name}</Text>. This
+          user has been automatically generated for you and will be persisted on
+          the device for a few days — unless you reset it before that.
         </Text>
         <Text style={styles.welcomeText}>
-          You could update the user's name via the settings, or you could reset
-          the auth token and generate a new demo user. But most importantly, you
-          can explore the chat screens!
+          Feel free to send messages, upload images, and find ways to break the
+          app!
         </Text>
       </View>
 
       <View style={styles.buttons}>
         <Button
-          title="Open chat"
+          title="Open a chat room"
           onPress={() => navigation.navigate('chat-room')}
         />
         <Button
           title="Open inbox"
           onPress={() => navigation.navigate('inbox')}
-        />
-        <Button
-          title="Settings"
-          onPress={() => navigation.navigate('settings')}
         />
         <Button title="Reset user" onPress={logout} />
       </View>
@@ -56,6 +52,9 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 16,
     marginTop: 16,
+  },
+  name: {
+    fontWeight: 'bold',
   },
   buttons: {
     alignItems: 'center',

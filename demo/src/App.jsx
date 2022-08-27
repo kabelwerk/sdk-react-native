@@ -18,7 +18,6 @@ import * as backend from './backend.js';
 import * as storage from './storage.js';
 import { HomeScreen } from './HomeScreen.jsx';
 import { NoTokenScreen } from './NoTokenScreen.jsx';
-import { SettingsScreen } from './SettingsScreen.jsx';
 
 // we do not really need react navigation for the demo, but we use it in order
 // to test our KabelwerkRoomScreen component
@@ -54,14 +53,6 @@ const App = function () {
       });
   }, []);
 
-  // update the user's name, also in the local storage
-  const updateName = React.useCallback(
-    (newName) => {
-      return storage.update({ name: newName, token }).then(loadConfig);
-    },
-    [token]
-  );
-
   // reset the name and token, also in the local storage
   const logout = React.useCallback(() => {
     storage.reset().then(loadConfig);
@@ -88,6 +79,7 @@ const App = function () {
       content: {
         title: message.user.name,
         body: message.text,
+        data: { roomId: message.roomId },
       },
       trigger: null,
     });
@@ -112,8 +104,10 @@ const App = function () {
 
     // open the chat room screen when the user taps on a notification
     const subscription = Notifications.addNotificationResponseReceivedListener(
-      () => {
-        navigationRef.current.navigate('chat-room');
+      (response) => {
+        navigationRef.current.navigate('chat-room', {
+          roomId: response.notification.request.content.data.roomId,
+        });
       }
     );
 
@@ -147,12 +141,11 @@ const App = function () {
           url={backend.WEBSOCKET_URL}
           token={token}
           logging="info"
-          userName={name}
           onNotification={triggerNotification}
         >
           <Stack.Navigator>
             <Stack.Screen name="home" options={{ title: 'Kabelwerk Demo' }}>
-              {(props) => <HomeScreen {...props} logout={logout} />}
+              {(props) => <HomeScreen {...props} name={name} logout={logout} />}
             </Stack.Screen>
             <Stack.Screen name="inbox" options={{ title: 'Kabelwerk Inbox' }}>
               {(props) => (
@@ -178,15 +171,6 @@ const App = function () {
                       pickImage={pickImage}
                     />
                   )}
-                />
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="settings" options={{ title: 'Settings' }}>
-              {(props) => (
-                <SettingsScreen
-                  {...props}
-                  name={name}
-                  updateName={updateName}
                 />
               )}
             </Stack.Screen>

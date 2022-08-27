@@ -18,7 +18,7 @@ const generateUser = function () {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name: 'anonymous' }),
+    body: JSON.stringify({}),
   })
     .then((response) => {
       if (response.ok) {

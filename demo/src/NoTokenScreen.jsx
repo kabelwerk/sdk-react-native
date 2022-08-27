@@ -10,7 +10,7 @@ const NoTokenScreen = function ({ generateUser }) {
         </Text>
         <Text style={styles.explanationText}>
           This could be either because your device is offline and no demo user
-          could be generated for you, or because you have logged out.
+          could be generated for you, or because you have reset your user.
         </Text>
         <Text style={styles.explanationText}>
           Please use the button below to generate a new demo user.
