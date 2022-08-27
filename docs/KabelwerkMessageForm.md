@@ -7,7 +7,7 @@ Most probably you will not directly use the `<KabelwerkMessageForm>` component i
 ## Example
 
 ```jsx
-// example with expo-document-picker
+// example using expo-document-picker
 const pickImage = function () {
   return DocumentPicker.getDocumentAsync({
     copyToCacheDirectory: false,
