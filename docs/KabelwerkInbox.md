@@ -24,7 +24,7 @@ The function used to render the inbox items. The default is to render an [`<Kabe
 
 ### `renderWelcomeBanner`
 
-Called to render something just above the inbox items when the user has neither posted nor received any messages yet. The default is not to render anything.
+Called to render a welcome banner just above the inbox items when the user has neither posted nor received any messages yet. The default is not to render anything.
 
 ### `onInboxItemPress`
 

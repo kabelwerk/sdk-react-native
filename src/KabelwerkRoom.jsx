@@ -100,6 +100,7 @@ const KabelwerkRoom = function ({
   renderMessage = renderKabelwerkMessage,
   renderMessageSeparator = renderKabelwerkMessageSeparator,
   renderMessageForm = renderKabelwerkMessageForm,
+  renderWelcomeBanner = undefined,
 }) {
   const { isReady } = React.useContext(KabelwerkContext);
 
@@ -216,6 +217,7 @@ const KabelwerkRoom = function ({
   return (
     <View style={styles.container}>
       <KabelwerkStatusBar />
+      {listItems.length == 0 && renderWelcomeBanner && renderWelcomeBanner()}
       <FlatList
         data={listItems}
         renderItem={renderItem}

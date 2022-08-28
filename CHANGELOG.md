@@ -3,8 +3,11 @@
 ## 0.1.2 (TBA)
 
 - Added the [`<KabelwerkInbox>`](./docs/KabelwerkInbox.md) and [`<KabelwerkInboxItem>`](./docs/KabelwerkInboxItem.md) components.
+- Added new `render*` props to the [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md) component.
 - Changed the props of the [`<KabelwerkMessageSeparator>`](./docs/KabelwerkMessageSeparator.md) component.
 - Upgraded the Kabelwerk SDK for JavaScript to [0.3.3](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.3).
+- The [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md) component can now also render image messages.
+- The [`<KabelwerkMessageForm>`](./docs/KabelwerkMessageForm.md) component now enables users to upload images.
 
 ## 0.1.1 (2022-08-01)
 

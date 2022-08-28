@@ -14,6 +14,7 @@ The `<KabelwerkRoom>` component renders a chat room.
   renderMessageForm={(postMessage, postUpload) => (
     <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
   )}
+  renderWelcomeBanner={() => <Text>Send us a message!</Text>}
 />
 ```
 
@@ -34,6 +35,10 @@ The function used to render the separators between messages posted on different 
 ### `renderMessageForm`
 
 The function used to render the form for posting new messages. The default is to render a [`<KabelwerkMessageForm>`](./KabelwerkMessageForm.md) component.
+
+### `renderWelcomeBanner`
+
+Called to render a welcome banner when the user has neither posted nor received any messages in the chat room yet. The default is not to render anything.
 
 ## See also
 
