@@ -7,7 +7,7 @@ You may want to use the `<KabelwerkMarkup>` component if you are overwriting the
 ## Example
 
 ```jsx
-<KabelwerkMarkup html={'<p>hello!</p>'} />
+<KabelwerkMarkup html="<p>hello!</p>" />
 ```
 
 ## Props

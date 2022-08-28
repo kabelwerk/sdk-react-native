@@ -11,6 +11,7 @@ The `<KabelwerkInbox>` component is usually only needed when you have more than 
   renderInboxItem={(inboxItem, onPress) => (
     <KabelwerkInboxItem item={inboxItem} onPress={onPress} />
   )}
+  renderWelcomeBanner={() => <Text>Welcome!</Text>}
   onInboxItemPress={(roomId) => navigate('chat-room', { roomId })}
 />
 ```
@@ -20,6 +21,10 @@ The `<KabelwerkInbox>` component is usually only needed when you have more than 
 ### `renderInboxItem`
 
 The function used to render the inbox items. The default is to render an [`<KabelwerkInboxItem>`](./KabelwerkInboxItem.md) component.
+
+### `renderWelcomeBanner`
+
+Called to render something just above the inbox items when the user has neither posted nor received any messages yet. The default is not to render anything.
 
 ### `onInboxItemPress`
 

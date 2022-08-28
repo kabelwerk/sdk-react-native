@@ -8,7 +8,7 @@ The SDK components depend on the context.
 
 ```jsx
 <KabelwerkProvider
-  url={'myapp.kabelwerk.io'}
+  url="myapp.kabelwerk.io"
   refreshToken={fetchAuthToken}
   logging={__DEV__ ? 'info' : 'silent'}
   onError={handleError}

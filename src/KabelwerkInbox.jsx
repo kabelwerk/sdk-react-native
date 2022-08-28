@@ -11,8 +11,17 @@ const renderKabelwerkInboxItem = function (item, onPress) {
   return <KabelwerkInboxItem item={item} onPress={onPress} />;
 };
 
+// check whether all rooms are empty
+const areRoomsEmpty = function (inboxItems) {
+  for (let item of inboxItems) {
+    if (item.message) return false;
+  }
+  return true;
+};
+
 const KabelwerkInbox = function ({
   renderInboxItem = renderKabelwerkInboxItem,
+  renderWelcomeBanner = undefined,
   onInboxItemPress = () => {},
 }) {
   const { isReady } = React.useContext(KabelwerkContext);
@@ -23,6 +32,10 @@ const KabelwerkInbox = function ({
   // the list of inbox items
   const [inboxItems, setInboxItems] = React.useState([]);
 
+  // whether to show the welcome banner
+  // not relevant unless the renderWelcomeBanner prop is set
+  const [showWelcomeBanner, setShowWelcomeBanner] = React.useState(false);
+
   // setup (and clean up after) the Kabelwerk inbox object
   React.useEffect(() => {
     if (isReady && Kabelwerk.getState() != Kabelwerk.INACTIVE) {
@@ -30,10 +43,16 @@ const KabelwerkInbox = function ({
 
       inbox.current.on('ready', ({ items }) => {
         setInboxItems(items);
+
+        // show the welcome banner if all rooms are still empty
+        if (areRoomsEmpty(items)) {
+          setShowWelcomeBanner(true);
+        }
       });
 
       inbox.current.on('updated', ({ items }) => {
         setInboxItems(items);
+        setShowWelcomeBanner(false);
       });
 
       inbox.current.connect();
@@ -48,6 +67,7 @@ const KabelwerkInbox = function ({
 
       // reset the state
       setInboxItems([]);
+      setShowWelcomeBanner(false);
     };
   }, [isReady]);
 
@@ -59,6 +79,7 @@ const KabelwerkInbox = function ({
   return (
     <View style={styles.container}>
       <KabelwerkStatusBar />
+      {showWelcomeBanner && renderWelcomeBanner && renderWelcomeBanner()}
       <FlatList
         data={inboxItems}
         keyExtractor={(item) => item.room.id}
