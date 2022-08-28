@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.2 (TBA)
+## 0.1.2 (2022-08-28)
 
 - Added the [`<KabelwerkInbox>`](./docs/KabelwerkInbox.md) and [`<KabelwerkInboxItem>`](./docs/KabelwerkInboxItem.md) components.
 - Added new `render*` props to the [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md) component.
@@ -11,7 +11,7 @@
 
 ## 0.1.1 (2022-08-01)
 
-- Added the `<KabelwerkMarkup>` component.
+- Added the [`<KabelwerkMarkup>`](./docs/KabelwerkMarkup.md) component.
 - Upgraded the Kabelwerk SDK for JavaScript to [0.3.2](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.2).
 
 ## 0.1.0 (2022-06-06)
