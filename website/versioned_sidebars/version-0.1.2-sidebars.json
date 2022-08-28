@@ -1,0 +1,35 @@
+{
+  "tutorialSidebar": [
+    "README",
+    {
+      "type": "category",
+      "label": "Contexts",
+      "items": ["KabelwerkContext"],
+      "collapsible": true,
+      "collapsed": false
+    },
+    {
+      "type": "category",
+      "label": "Components",
+      "items": [
+        "KabelwerkInbox",
+        "KabelwerkInboxItem",
+        "KabelwerkMarkup",
+        "KabelwerkMessage",
+        "KabelwerkMessageForm",
+        "KabelwerkMessageSeparator",
+        "KabelwerkRoom",
+        "KabelwerkStatusBar"
+      ],
+      "collapsible": true,
+      "collapsed": false
+    },
+    {
+      "type": "category",
+      "label": "Screens",
+      "items": ["KabelwerkRoomScreen"],
+      "collapsible": true,
+      "collapsed": false
+    }
+  ]
+}
