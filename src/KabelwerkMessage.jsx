@@ -1,9 +1,14 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
 import {
+  ActionSheetIOS,
+  Clipboard,
   Image,
+  Platform,
+  Pressable,
   StyleSheet,
   Text,
+  ToastAndroid,
   View,
   useWindowDimensions,
 } from 'react-native';
@@ -23,46 +28,78 @@ const areEqual = function (prevProps, nextProps) {
   return true;
 };
 
-const KabelwerkMessage = React.memo(function ({ message, theirMarker }) {
+// copy the message to the clipboard — if it is a text message
+//
+// on Android directly copy the message and show a toast
+// on iOS show an action sheet providing the copy option
+const yank = function (message) {
+  if (message.type == 'text') {
+    if (Platform.OS == 'android') {
+      Clipboard.setString(message.text);
+      ToastAndroid.show('Text copied to clipboard.', ToastAndroid.SHORT);
+    } else if (Platform.OS == 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['Copy', 'Cancel'],
+          cancelButtonIndex: 1,
+        },
+        (buttonIndex) => {
+          if (buttonIndex == 0) {
+            Clipboard.setString(message.text);
+          }
+        }
+      );
+    }
+  }
+};
+
+const KabelwerkMessage = React.memo(function ({
+  message,
+  theirMarker,
+  onLongPress = yank,
+}) {
   const windowDimensions = useWindowDimensions();
 
   const isOurs = message.user.id == Kabelwerk.getUser().id;
   const isMarked = isOurs && theirMarker >= message.id;
 
   return (
-    <View
-      style={[
-        styles.container,
-        isOurs ? styles.ours : styles.theirs,
-        message.type == 'text' ? styles.text : undefined,
-      ]}
-    >
-      {message.type == 'image' ? (
-        <Image
-          resizeMethod="scale"
-          resizeMode="contain"
-          source={{
-            uri: message.upload.preview.url,
-            width: message.upload.preview.width,
-            height: message.upload.preview.height,
-          }}
-          style={inferImageStyles(message.upload.preview, windowDimensions)}
-        />
-      ) : (
-        <KabelwerkMarkup html={message.html} />
-      )}
-      <View style={styles.footer}>
-        <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
-        {isOurs && (
-          <View style={styles.checkmarks}>
-            <Text style={styles.checkmark}>✓</Text>
-            {isMarked && <Text style={styles.checkmark}>✓</Text>}
-          </View>
+    <Pressable onLongPress={() => onLongPress(message)}>
+      <View
+        style={[
+          styles.container,
+          isOurs ? styles.ours : styles.theirs,
+          message.type == 'text' ? styles.text : undefined,
+        ]}
+      >
+        {message.type == 'image' ? (
+          <Image
+            resizeMethod="scale"
+            resizeMode="contain"
+            source={{
+              uri: message.upload.preview.url,
+              width: message.upload.preview.width,
+              height: message.upload.preview.height,
+            }}
+            style={inferImageStyles(message.upload.preview, windowDimensions)}
+          />
+        ) : (
+          <KabelwerkMarkup html={message.html} />
         )}
+        <View style={styles.footer}>
+          <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
+          {isOurs && (
+            <View style={styles.checkmarks}>
+              <Text style={styles.checkmark}>✓</Text>
+              {isMarked && <Text style={styles.checkmark}>✓</Text>}
+            </View>
+          )}
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
-}, areEqual);
+},
+areEqual);
 
 const styles = StyleSheet.create({
   container: {

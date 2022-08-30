@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 (TBA)
+
+- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `onLongPress` prop.
+
 ## 0.1.2 (2022-08-28)
 
 - Added the [`<KabelwerkInbox>`](./docs/KabelwerkInbox.md) and [`<KabelwerkInboxItem>`](./docs/KabelwerkInboxItem.md) components.
