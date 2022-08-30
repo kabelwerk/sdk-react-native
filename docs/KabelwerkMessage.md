@@ -10,6 +10,7 @@ Most probably you will not directly use the `<KabelwerkMessage>` component in yo
 <KabelwerkMessage
   message={message}
   theirMarker={42}
+  renderCheckmarks={(number) => number == 2 && <Text>seen</Text>}
   onLongPress={(message) => Clipboard.setString(message.text)}
 />
 ```
@@ -23,6 +24,10 @@ A chat message object. Please refer to the [JavaScript SDK docs](https://docs.ka
 ### `theirMarker`
 
 The ID of the latest message marked by someone on the hub side. This is used to determine the number of checkmarks shown in the bottom right corner of messages posted by the connected user.
+
+### `renderCheckmarks`
+
+The function used to render the checkmarks in the bottom right corner of messages posted by the connected user. The default is to simply render the corresponding number of ✓ symbols. If you do not want to have checkmarks, pass a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) value. This prop is not relevant for messages which have not been posted by the connected user.
 
 ### `onLongPress`
 

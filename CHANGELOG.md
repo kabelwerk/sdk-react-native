@@ -2,7 +2,7 @@
 
 ## 0.1.3 (TBA)
 
-- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `onLongPress` prop.
+- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderCheckmarks` and `onLongPress` prop.
 
 ## 0.1.2 (2022-08-28)
 

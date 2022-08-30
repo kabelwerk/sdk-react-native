@@ -53,9 +53,20 @@ const yank = function (message) {
   }
 };
 
+// the default function for rendering a message's checkmarks
+const renderKabelwerkCheckmarks = function (number) {
+  return (
+    <View style={styles.checkmarks}>
+      <Text style={styles.checkmark}>✓</Text>
+      {number == 2 && <Text style={styles.checkmark}>✓</Text>}
+    </View>
+  );
+};
+
 const KabelwerkMessage = React.memo(function ({
   message,
   theirMarker,
+  renderCheckmarks = renderKabelwerkCheckmarks,
   onLongPress = yank,
 }) {
   const windowDimensions = useWindowDimensions();
@@ -88,12 +99,7 @@ const KabelwerkMessage = React.memo(function ({
         )}
         <View style={styles.footer}>
           <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
-          {isOurs && (
-            <View style={styles.checkmarks}>
-              <Text style={styles.checkmark}>✓</Text>
-              {isMarked && <Text style={styles.checkmark}>✓</Text>}
-            </View>
-          )}
+          {isOurs && renderCheckmarks && renderCheckmarks(isMarked ? 2 : 1)}
         </View>
       </View>
     </Pressable>
@@ -117,6 +123,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   footer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
