@@ -65,7 +65,7 @@ const renderKabelwerkCheckmarks = function (number) {
 
 const KabelwerkMessage = React.memo(function ({
   message,
-  theirMarker,
+  theirMarker = undefined,
   renderCheckmarks = renderKabelwerkCheckmarks,
   onLongPress = yank,
 }) {

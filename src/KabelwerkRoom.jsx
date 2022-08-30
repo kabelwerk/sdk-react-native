@@ -118,16 +118,17 @@ const KabelwerkRoom = function ({
     if (isReady && Kabelwerk.getState() != Kabelwerk.INACTIVE) {
       room.current = Kabelwerk.openRoom(roomId);
 
-      // when the initial list is messages is loaded
+      // when the initial list of messages and markers is loaded
       room.current.on('ready', ({ messages, markers }) => {
+        // settings this before the list items saves a re-render
+        if (markers[1]) {
+          setTheirMarker(markers[1].messageId);
+        }
+
         setListItems(() => expandEarlier([], messages));
 
         if (messages.length) {
           room.current.moveMarker();
-        }
-
-        if (markers[1]) {
-          setTheirMarker(markers[1].messageId);
         }
       });
 
