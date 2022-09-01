@@ -101,6 +101,7 @@ const KabelwerkRoom = function ({
   renderMessageSeparator = renderKabelwerkMessageSeparator,
   renderMessageForm = renderKabelwerkMessageForm,
   renderWelcomeBanner = undefined,
+  onReady = undefined,
 }) {
   const { isReady } = React.useContext(KabelwerkContext);
 
@@ -129,6 +130,10 @@ const KabelwerkRoom = function ({
 
         if (messages.length) {
           room.current.moveMarker();
+        }
+
+        if (onReady) {
+          onReady(room.current);
         }
       });
 
@@ -160,7 +165,7 @@ const KabelwerkRoom = function ({
       setListItems([]);
       setTheirMarker(-1);
     };
-  }, [isReady, roomId]);
+  }, [isReady, roomId, onReady]);
 
   // fetch more messages from earlier in the chat history
   const loadEarlierMessages = React.useCallback(() => {

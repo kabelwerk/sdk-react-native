@@ -3,6 +3,7 @@
 ## 0.1.3 (TBA)
 
 - [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderCheckmarks` and `onLongPress` prop.
+- [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md): added the `onReady` prop.
 
 ## 0.1.2 (2022-08-28)
 

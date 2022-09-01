@@ -15,6 +15,7 @@ The `<KabelwerkRoom>` component renders a chat room.
     <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
   )}
   renderWelcomeBanner={() => <Text>Send us a message!</Text>}
+  onReady={(room) => room.updateAttributes({ lastOpened: new Date() })}
 />
 ```
 
@@ -39,6 +40,10 @@ The function used to render the form for posting new messages. The default is to
 ### `renderWelcomeBanner`
 
 Called to render a welcome banner when the user has neither posted nor received any messages in the chat room yet. The default is not to render anything.
+
+### `onReady`
+
+Called when the connection to the backend for this room is first established. Called with the respective [room object](https://docs.kabelwerk.io/js/rooms). You can use this to update the room's [custom attributes](https://docs.kabelwerk.io/js/rooms#custom-attributes). The default is a no-op.
 
 ## See also
 
