@@ -17,6 +17,7 @@ The SDK builds on top of — and includes as a dependency — the [Kabelwerk SDK
 ## Contexts
 
 - [Kabelwerk Context](./KabelwerkContext.md)
+- [Kabelwerk Theme](./KabelwerkTheme.md)
 
 ## Components
 

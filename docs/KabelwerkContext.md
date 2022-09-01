@@ -2,7 +2,7 @@
 
 The Kabelwerk context takes care of opening and maintaining the websocket connection to the Kabelwerk backend — also across [AppState](https://reactnative.dev/docs/appstate) changes.
 
-The SDK components depend on the context.
+Most components in this SDK depend on this context and should be wrapped by a configured `<KabelwerkProvider>` in order to function.
 
 ## Example
 

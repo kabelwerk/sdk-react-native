@@ -4,7 +4,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Contexts',
-      items: ['KabelwerkContext'],
+      items: ['KabelwerkContext', 'KabelwerkTheme'],
       collapsible: true,
       collapsed: false,
     },
