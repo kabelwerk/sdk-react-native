@@ -6,4 +6,5 @@ export { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
 export { KabelwerkRoom } from './KabelwerkRoom.jsx';
 export { KabelwerkRoomScreen } from './KabelwerkRoomScreen.jsx';
 export { KabelwerkStatusBar } from './KabelwerkStatusBar.jsx';
+export { KabelwerkTheme } from './KabelwerkTheme.jsx';
 export { VERSION } from './version.js';

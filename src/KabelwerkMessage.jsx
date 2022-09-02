@@ -6,7 +6,6 @@ import {
   Image,
   Platform,
   Pressable,
-  StyleSheet,
   Text,
   ToastAndroid,
   View,
@@ -14,6 +13,7 @@ import {
 } from 'react-native';
 
 import { KabelwerkMarkup } from './KabelwerkMarkup.js';
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 import { toTimeString } from './datetime.js';
 
 // return false if the other side's marker has moved over the message
@@ -55,6 +55,8 @@ const yank = function (message) {
 
 // the default function for rendering a message's checkmarks
 const renderKabelwerkCheckmarks = function (number) {
+  const styles = styleSheet.get();
+
   return (
     <View style={styles.checkmarks}>
       <Text style={styles.checkmark}>✓</Text>
@@ -70,6 +72,9 @@ const KabelwerkMessage = React.memo(function ({
   onLongPress = yank,
 }) {
   const windowDimensions = useWindowDimensions();
+
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
 
   const isOurs = message.user.id == Kabelwerk.getUser().id;
   const isMarked = isOurs && theirMarker >= message.id;
@@ -107,7 +112,7 @@ const KabelwerkMessage = React.memo(function ({
 },
 areEqual);
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
     backgroundColor: 'white',
     marginTop: 16,
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   time: {
-    fontSize: 10,
+    fontSize: theme.fontSizeSmall,
   },
   checkmarks: {
     flexDirection: 'row',
@@ -136,10 +141,10 @@ const styles = StyleSheet.create({
     width: 18,
   },
   checkmark: {
-    fontSize: 10,
+    fontSize: theme.fontSizeSmall,
     marginLeft: -4,
   },
-});
+}));
 
 // determine the width and height of an <Image> based on the screen width
 const inferImageStyles = function (image, screen) {

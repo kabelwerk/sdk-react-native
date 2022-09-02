@@ -13,8 +13,11 @@ The `<KabelwerkTheme>` context does not depend on the [Kabelwerk context](./Kabe
   fontFamily="DMSans"
   fontSizeBase={14}
   fontSizeSmall={10}
-  backgroundColor="white"
+  fontSizeLarge={18}
+  backgroundColor="transparent"
   surfaceColor="white"
+  onBackgroundColor="black"
+  onSurfaceColor="black"
   spacingBase={8}
 >
   {/* chat screens */}
@@ -33,15 +36,27 @@ The base font size of text in Kabelwerk components, e.g. for the text of chat me
 
 ### `fontSizeSmall`
 
-The font size of secondary text, e.g. the time of posting the message in the bottom right corner of chat message components. The default value is 10.
+The font size for smaller text, e.g. for the time of posting the message in the bottom right corner of chat message components. The default value is 10.
+
+### `fontSizeLarge`
+
+The font size for larger text, e.g. for the text input where users write their messages. The default value is 18.
 
 ### `backgroundColor`
 
-The colour of the background behind scrollable content, e.g. behind the chat messages in a chat room.
+The colour of the background behind scrollable content, e.g. behind the chat messages in a chat room. The default value is transparent, i.e. the system's default background colour.
+
+### `onBackgroundColor`
+
+The colour of text displayed on background colour, e.g. for the text of chat message separators. The default value is black.
 
 ### `surfaceColor`
 
 The colour of the surfaces of most components, e.g. the background colour of the chat messages or inbox items. The default value is white.
+
+### `onSurfaceColor`
+
+The colour of text displayed on surface colour, e.g. for the text of chat messages. The default value is black.
 
 ### `spacingBase`
 
