@@ -1,6 +1,8 @@
 import React from 'react';
 import { Linking, Text } from 'react-native';
 
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
+
 // regex matching html tags, both opening and closing
 //
 // capturing groups:
@@ -22,32 +24,36 @@ const ATTRS_REGEX = /([a-z]+)="([^<"'>\s]+)"/g;
 // this manner, we use the index of the last char of the tag as key
 const ELEMENTS = Object.freeze({
   p: function (_, children, index) {
-    return React.createElement(
-      Text,
-      { key: index, style: { marginBottom: 8 } },
-      children
-    );
+    const styles = styleSheet.get();
+
+    return React.createElement(Text, { key: index, style: styles.p }, children);
   },
   em: function (_, children, index) {
+    const styles = styleSheet.get();
+
     return React.createElement(
       Text,
-      { key: index, style: { fontStyle: 'italic' } },
+      { key: index, style: styles.em },
       children
     );
   },
   strong: function (_, children, index) {
+    const styles = styleSheet.get();
+
     return React.createElement(
       Text,
-      { key: index, style: { fontWeight: 'bold' } },
+      { key: index, style: styles.strong },
       children
     );
   },
   a: function (attrs, children, index) {
+    const styles = styleSheet.get();
+
     return React.createElement(
       Text,
       {
         key: index,
-        style: { textDecorationLine: 'underline' },
+        style: styles.a,
         onPress: () => Linking.openURL(attrs.href),
       },
       children
@@ -136,6 +142,9 @@ const parseAttrs = function (htmlAttrs) {
 };
 
 const KabelwerkMarkup = function ({ html, elements }) {
+  const theme = React.useContext(ThemeContext);
+  styleSheet.render(theme);
+
   let elemDict = ELEMENTS;
 
   if (elements) {
@@ -144,5 +153,22 @@ const KabelwerkMarkup = function ({ html, elements }) {
 
   return convert(html, elemDict);
 };
+
+const styleSheet = initStyleSheet((theme) => ({
+  p: {
+    fontFamily: theme.fontFamily,
+    fontSize: theme.fontSizeBase,
+    marginBottom: 8,
+  },
+  em: {
+    fontStyle: 'italic',
+  },
+  strong: {
+    fontWeight: 'bold',
+  },
+  a: {
+    textDecorationLine: 'underline',
+  },
+}));
 
 export { KabelwerkMarkup, convert };
