@@ -44,19 +44,19 @@ The font size for larger text, e.g. for the text input where users write their m
 
 ### `backgroundColor`
 
-The colour of the background behind scrollable content, e.g. behind the chat messages in a chat room. The default value is transparent, i.e. the system's default background colour.
-
-### `onBackgroundColor`
-
-The colour of text displayed on background colour, e.g. for the text of chat message separators. The default value is black.
+The colour of the background behind scrollable content, e.g. the background colour of a chat room behind the chat message components. The default value is transparent, i.e. the system's default background colour.
 
 ### `surfaceColor`
 
-The colour of the surfaces of most components, e.g. the background colour of the chat messages or inbox items. The default value is white.
+The colour of the surfaces of most components, e.g. the background colour of a chat message component or an inbox item component. The default value is white.
+
+### `onBackgroundColor`
+
+The colour of text displayed on background colour, e.g. the colour of the date string displayed between chat messages posted on different dates in a chat room. The default value is the system's default text colour.
 
 ### `onSurfaceColor`
 
-The colour of text displayed on surface colour, e.g. for the text of chat messages. The default value is black.
+The colour of text displayed on surface colour, e.g. the colour of the text of a chat message or the colour of the text in a text input for posting messages. The default value is the system's default text colour.
 
 ### `spacingBase`
 

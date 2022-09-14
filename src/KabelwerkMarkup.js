@@ -156,6 +156,7 @@ const KabelwerkMarkup = function ({ html, elements }) {
 
 const styleSheet = initStyleSheet((theme) => ({
   p: {
+    color: theme.onSurfaceColor,
     fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeBase,
     marginBottom: 8,

@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 
 // once a separator is rendered there is no reason for it to re-render
 const areEqual = function (prevProps, nextProps) {
@@ -7,18 +9,26 @@ const areEqual = function (prevProps, nextProps) {
 };
 
 const KabelwerkMessageSeparator = React.memo(function ({ date }) {
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
+
   return (
     <View style={styles.container}>
-      <Text>&mdash; {date} &mdash;</Text>
+      <Text style={styles.text}>&mdash; {date} &mdash;</Text>
     </View>
   );
 }, areEqual);
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
     alignSelf: 'center',
     marginTop: 16,
   },
-});
+  text: {
+    color: theme.onBackgroundColor,
+    fontFamily: theme.fontFamily,
+    fontSize: theme.fontSizeBase,
+  },
+}));
 
 export { KabelwerkMessageSeparator };

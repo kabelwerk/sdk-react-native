@@ -1,7 +1,8 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 import { toDateOrTimeString } from './datetime.js';
 
 // the default function for rendering the hubs' avatars
@@ -26,6 +27,9 @@ const KabelwerkInboxItem = function ({
   onPress,
   renderAvatar = renderKabelwerkAvatar,
 }) {
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {renderAvatar && renderAvatar(item.room.hub)}
@@ -65,7 +69,7 @@ const KabelwerkInboxItem = function ({
   );
 };
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
     alignItems: 'center',
     borderBottomColor: 'lightgrey',
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   datetime: {
-    fontSize: 10,
+    fontSize: theme.fontSizeSmall,
   },
   lowerHalf: {
     alignItems: 'center',
@@ -105,6 +109,6 @@ const styles = StyleSheet.create({
   emptyRoom: {
     fontStyle: 'italic',
   },
-});
+}));
 
 export { KabelwerkInboxItem };

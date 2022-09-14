@@ -9,6 +9,8 @@ const ThemeContext = React.createContext({
   fontSizeLarge: 18,
   backgroundColor: 'transparent',
   surfaceColor: 'white',
+  onBackgroundColor: undefined,
+  onSurfaceColor: undefined,
   spacingBase: 8,
 });
 
@@ -21,6 +23,8 @@ const KabelwerkTheme = function ({
   fontSizeLarge = 18,
   backgroundColor = 'transparent',
   surfaceColor = 'white',
+  onBackgroundColor = undefined,
+  onSurfaceColor = undefined,
   spacingBase = 8,
 }) {
   return (
@@ -32,6 +36,8 @@ const KabelwerkTheme = function ({
         fontSizeLarge,
         backgroundColor,
         surfaceColor,
+        onBackgroundColor,
+        onSurfaceColor,
         spacingBase,
       }}
     >

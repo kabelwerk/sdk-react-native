@@ -1,10 +1,11 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
 import { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
 import { KabelwerkStatusBar } from './KabelwerkStatusBar.jsx';
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 
 // the default function for rendering the inbox items of an inbox
 const renderKabelwerkInboxItem = function (item, onPress) {
@@ -24,6 +25,10 @@ const KabelwerkInbox = function ({
   renderWelcomeBanner = undefined,
   onInboxItemPress = () => {},
 }) {
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
+
+  // only try to open the inbox after we have connected to the backend
   const { isReady } = React.useContext(KabelwerkContext);
 
   // the Kabelwerk inbox object
@@ -90,12 +95,12 @@ const KabelwerkInbox = function ({
   );
 };
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: theme.surfaceColor,
     flex: 1,
   },
   flatList: {},
-});
+}));
 
 export { KabelwerkInbox };

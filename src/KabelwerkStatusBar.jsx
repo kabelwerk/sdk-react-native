@@ -1,12 +1,16 @@
 import Kabelwerk from 'kabelwerk';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { KabelwerkContext } from './KabelwerkContext.jsx';
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 
 // a status bar that tells the user Kabelwerk's connection state when the
 // latter is inactive or connecting
 const KabelwerkStatusBar = function () {
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
+
   // the current Kabelwerk connection state
   const { state } = React.useContext(KabelwerkContext);
 
@@ -27,7 +31,7 @@ const KabelwerkStatusBar = function () {
   }
 };
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
     padding: 8,
   },
@@ -38,8 +42,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'paleturquoise',
   },
   text: {
-    fontSize: 16,
+    fontSize: theme.fontSizeLarge,
   },
-});
+}));
 
 export { KabelwerkStatusBar };

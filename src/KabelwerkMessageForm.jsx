@@ -1,17 +1,16 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 
 const KabelwerkMessageForm = function ({
   postMessage,
   postUpload,
   pickImage = undefined,
 }) {
+  const theme = React.useContext(ThemeContext);
+  const styles = styleSheet.render(theme);
+
   // the value of the text input for posting new messages
   const [draft, setDraft] = React.useState('');
 
@@ -99,16 +98,16 @@ const KabelwerkMessageForm = function ({
   );
 };
 
-const styles = StyleSheet.create({
+const styleSheet = initStyleSheet((theme) => ({
   container: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: theme.surfaceColor,
     flexDirection: 'row',
     paddingLeft: 16,
   },
   textInput: {
     flex: 1,
-    fontSize: 18,
+    fontSize: theme.fontSizeLarge,
     marginVertical: 16,
     paddingTop: 0, // on iOS there is a default padding
     paddingBottom: 0,
@@ -119,6 +118,6 @@ const styles = StyleSheet.create({
   sendButtonText: {
     fontSize: 22,
   },
-});
+}));
 
 export { KabelwerkMessageForm };
