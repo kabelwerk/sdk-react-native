@@ -16,8 +16,10 @@ The `<KabelwerkTheme>` context does not depend on the [Kabelwerk context](./Kabe
   fontSizeLarge={18}
   backgroundColor="transparent"
   surfaceColor="white"
+  accentColor="paleturquoise"
   onBackgroundColor="black"
   onSurfaceColor="black"
+  onAccentColor="black"
   spacingBase={8}
 >
   {/* chat screens */}
@@ -48,7 +50,11 @@ The colour of the background behind scrollable content, e.g. the background colo
 
 ### `surfaceColor`
 
-The colour of the surfaces of most components, e.g. the background colour of a chat message component or an inbox item component. The default value is white.
+The background colour of most components, e.g. the background colour of a chat message component or an inbox item component. The default value is white.
+
+### `accentColor`
+
+The background colour of highlighted components, e.g. the background colour of the [status bar component](./KabelwerkStatusBar.md). The default value is Kabelwerk's brand colour.
 
 ### `onBackgroundColor`
 
@@ -57,6 +63,10 @@ The colour of text displayed on background colour, e.g. the colour of the date s
 ### `onSurfaceColor`
 
 The colour of text displayed on surface colour, e.g. the colour of the text of a chat message or the colour of the text in a text input for posting messages. The default value is the system's default text colour.
+
+### `onAccentColor`
+
+The colour of text displayed on accent colour, e.g. the colour of the status bar's text. The default value is the system's default text colour.
 
 ### `spacingBase`
 

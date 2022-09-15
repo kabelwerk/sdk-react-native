@@ -101,8 +101,9 @@ const styleSheet = initStyleSheet((theme) => ({
     flex: 1,
   },
   isNew: {
-    backgroundColor: 'cadetblue',
-    color: 'white',
+    backgroundColor: theme.accentColor,
+    color: theme.onAccentColor,
+    fontSize: theme.fontSizeBase,
     marginLeft: 8,
     paddingHorizontal: 8,
   },

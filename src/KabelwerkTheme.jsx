@@ -9,8 +9,10 @@ const ThemeContext = React.createContext({
   fontSizeLarge: 18,
   backgroundColor: 'transparent',
   surfaceColor: 'white',
+  accentColor: '#a9e0e5',
   onBackgroundColor: undefined,
   onSurfaceColor: undefined,
+  onAccentColor: undefined,
   spacingBase: 8,
 });
 
@@ -23,8 +25,10 @@ const KabelwerkTheme = function ({
   fontSizeLarge = 18,
   backgroundColor = 'transparent',
   surfaceColor = 'white',
+  accentColor = '#a9e0e5',
   onBackgroundColor = undefined,
   onSurfaceColor = undefined,
+  onAccentColor = undefined,
   spacingBase = 8,
 }) {
   return (
@@ -36,8 +40,10 @@ const KabelwerkTheme = function ({
         fontSizeLarge,
         backgroundColor,
         surfaceColor,
+        accentColor,
         onBackgroundColor,
         onSurfaceColor,
+        onAccentColor,
         spacingBase,
       }}
     >

@@ -39,9 +39,10 @@ const styleSheet = initStyleSheet((theme) => ({
     backgroundColor: 'lightgrey',
   },
   connecting: {
-    backgroundColor: 'paleturquoise',
+    backgroundColor: theme.accentColor,
   },
   text: {
+    color: theme.onAccentColor,
     fontSize: theme.fontSizeLarge,
   },
 }));
