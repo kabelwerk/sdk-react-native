@@ -14,6 +14,7 @@ const ThemeContext = React.createContext({
   onSurfaceColor: undefined,
   onAccentColor: undefined,
   spacingBase: 8,
+  borderRadius: undefined,
 });
 
 // the context provider to be used by devs
@@ -30,6 +31,7 @@ const KabelwerkTheme = function ({
   onSurfaceColor = undefined,
   onAccentColor = undefined,
   spacingBase = 8,
+  borderRadius = undefined,
 }) {
   return (
     <ThemeContext.Provider
@@ -45,6 +47,7 @@ const KabelwerkTheme = function ({
         onSurfaceColor,
         onAccentColor,
         spacingBase,
+        borderRadius,
       }}
     >
       {children}

@@ -21,6 +21,7 @@ The `<KabelwerkTheme>` context does not depend on the [Kabelwerk context](./Kabe
   onSurfaceColor="black"
   onAccentColor="black"
   spacingBase={8}
+  borderRadius={0}
 >
   {/* chat screens */}
 </KabelwerkTheme>
@@ -71,6 +72,10 @@ The colour of text displayed on accent colour, e.g. the colour of the status bar
 ### `spacingBase`
 
 The base spacing used for margins and paddings, e.g. the padding of a chat message. The default value is 8.
+
+### `borderRadius`
+
+The border radius of certain components, e.g. the chat message component. The default is not to have rounded borders.
 
 ## See also
 

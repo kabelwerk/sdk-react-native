@@ -118,6 +118,7 @@ areEqual);
 const styleSheet = initStyleSheet((theme) => ({
   container: {
     backgroundColor: theme.surfaceColor,
+    borderRadius: theme.borderRadius,
     marginTop: theme.spacingBase * 2,
     padding: theme.spacingBase * 2,
   },
