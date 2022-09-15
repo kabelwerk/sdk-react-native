@@ -97,7 +97,10 @@ const KabelwerkMessage = React.memo(function ({
               width: message.upload.preview.width,
               height: message.upload.preview.height,
             }}
-            style={inferImageStyles(message.upload.preview, windowDimensions)}
+            style={[
+              inferImageDimensions(message.upload.preview, windowDimensions),
+              styles.image,
+            ]}
           />
         ) : (
           <KabelwerkMarkup html={message.html} />
@@ -115,8 +118,8 @@ areEqual);
 const styleSheet = initStyleSheet((theme) => ({
   container: {
     backgroundColor: theme.surfaceColor,
-    marginTop: 16,
-    padding: 16,
+    marginTop: theme.spacingBase * 2,
+    padding: theme.spacingBase * 2,
   },
   ours: {
     alignSelf: 'flex-end',
@@ -126,6 +129,9 @@ const styleSheet = initStyleSheet((theme) => ({
   },
   text: {
     maxWidth: '80%',
+  },
+  image: {
+    marginBottom: theme.spacingBase,
   },
   footer: {
     alignItems: 'center',
@@ -147,12 +153,11 @@ const styleSheet = initStyleSheet((theme) => ({
 }));
 
 // determine the width and height of an <Image> based on the screen width
-const inferImageStyles = function (image, screen) {
+const inferImageDimensions = function (image, screen) {
   const factor = screen.width * 0.8 >= image.width ? 1 : 0.5;
 
   return {
     height: image.height * factor,
-    marginBottom: 8,
     width: image.width * factor,
   };
 };

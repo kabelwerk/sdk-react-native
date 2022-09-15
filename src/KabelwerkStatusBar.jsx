@@ -33,7 +33,7 @@ const KabelwerkStatusBar = function () {
 
 const styleSheet = initStyleSheet((theme) => ({
   container: {
-    padding: 8,
+    padding: theme.spacingBase,
   },
   inactive: {
     backgroundColor: 'lightgrey',

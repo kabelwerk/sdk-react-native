@@ -75,7 +75,7 @@ const styleSheet = initStyleSheet((theme) => ({
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
     flexDirection: 'row',
-    padding: 8,
+    padding: theme.spacingBase,
   },
   main: {
     flex: 1,
@@ -83,7 +83,7 @@ const styleSheet = initStyleSheet((theme) => ({
   upperHalf: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: 24,
+    height: theme.spacingBase * 3,
   },
   room: {
     flex: 1,
@@ -95,7 +95,7 @@ const styleSheet = initStyleSheet((theme) => ({
   lowerHalf: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: 32,
+    height: theme.spacingBase * 4,
   },
   message: {
     flex: 1,
@@ -104,8 +104,8 @@ const styleSheet = initStyleSheet((theme) => ({
     backgroundColor: theme.accentColor,
     color: theme.onAccentColor,
     fontSize: theme.fontSizeBase,
-    marginLeft: 8,
-    paddingHorizontal: 8,
+    marginLeft: theme.spacingBase,
+    paddingHorizontal: theme.spacingBase,
   },
   emptyRoom: {
     fontStyle: 'italic',

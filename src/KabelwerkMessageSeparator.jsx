@@ -22,7 +22,7 @@ const KabelwerkMessageSeparator = React.memo(function ({ date }) {
 const styleSheet = initStyleSheet((theme) => ({
   container: {
     alignSelf: 'center',
-    marginTop: 16,
+    marginTop: theme.spacingBase * 2,
   },
   text: {
     color: theme.onBackgroundColor,

@@ -103,17 +103,17 @@ const styleSheet = initStyleSheet((theme) => ({
     alignItems: 'center',
     backgroundColor: theme.surfaceColor,
     flexDirection: 'row',
-    paddingLeft: 16,
+    paddingLeft: theme.spacingBase * 2,
   },
   textInput: {
     flex: 1,
     fontSize: theme.fontSizeLarge,
-    marginVertical: 16,
+    marginVertical: theme.spacingBase * 2,
     paddingTop: 0, // on iOS there is a default padding
     paddingBottom: 0,
   },
   sendButton: {
-    paddingRight: 8,
+    paddingRight: theme.spacingBase,
   },
   sendButtonText: {
     fontSize: 22,

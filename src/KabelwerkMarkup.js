@@ -159,7 +159,7 @@ const styleSheet = initStyleSheet((theme) => ({
     color: theme.onSurfaceColor,
     fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeBase,
-    marginBottom: 8,
+    marginBottom: theme.spacingBase,
   },
   em: {
     fontStyle: 'italic',
