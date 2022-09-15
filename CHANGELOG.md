@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.3 (TBA)
+## 0.1.3 (2022-09-15)
 
 - Added the [`<KabelwerkTheme>`](./docs/KabelwerkTheme.md) context.
 - [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md): added the `onReady` prop.
