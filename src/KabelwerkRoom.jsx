@@ -114,6 +114,10 @@ const KabelwerkRoom = function ({
   // the ID of the message marked by the other side
   const [theirMarker, setTheirMarker] = React.useState(-1);
 
+  // whether to show the welcome banner
+  // not relevant unless the renderWelcomeBanner prop is set
+  const [showWelcomeBanner, setShowWelcomeBanner] = React.useState(false);
+
   // setup (and clean up after) the Kabelwerk room object
   React.useEffect(() => {
     if (isReady && Kabelwerk.getState() != Kabelwerk.INACTIVE) {
@@ -121,7 +125,7 @@ const KabelwerkRoom = function ({
 
       // when the initial list of messages and markers is loaded
       room.current.on('ready', ({ messages, markers }) => {
-        // settings this before the list items saves a re-render
+        // setting this before the list items saves a re-render
         if (markers[1]) {
           setTheirMarker(markers[1].messageId);
         }
@@ -130,6 +134,8 @@ const KabelwerkRoom = function ({
 
         if (messages.length) {
           room.current.moveMarker();
+        } else {
+          setShowWelcomeBanner(true);
         }
 
         if (onReady) {
@@ -140,6 +146,7 @@ const KabelwerkRoom = function ({
       // when a new message is posted in the room
       room.current.on('message_posted', (message) => {
         setListItems((listItems) => expandNew(listItems, message));
+        setShowWelcomeBanner(false);
 
         room.current.moveMarker();
       });
@@ -164,6 +171,7 @@ const KabelwerkRoom = function ({
       // reset the state
       setListItems([]);
       setTheirMarker(-1);
+      setShowWelcomeBanner(false);
     };
   }, [isReady, roomId, onReady]);
 
@@ -223,7 +231,7 @@ const KabelwerkRoom = function ({
   return (
     <View style={styles.container}>
       <KabelwerkStatusBar />
-      {listItems.length == 0 && renderWelcomeBanner && renderWelcomeBanner()}
+      {showWelcomeBanner && renderWelcomeBanner && renderWelcomeBanner()}
       <FlatList
         data={listItems}
         renderItem={renderItem}
