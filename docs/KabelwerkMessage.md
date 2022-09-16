@@ -11,6 +11,7 @@ Most probably you will not directly use the `<KabelwerkMessage>` component in yo
   message={message}
   theirMarker={42}
   renderCheckmarks={(number) => number == 2 && <Text>seen</Text>}
+  renderTime={(d) => <Text>{d.toTimeString().substring(0, 5)}</Text>}
   onLongPress={(message) => Clipboard.setString(message.text)}
 />
 ```
@@ -28,6 +29,10 @@ The ID of the latest message marked by someone on the hub side. This is used to 
 ### `renderCheckmarks`
 
 The function used to render the checkmarks in the bottom right corner of messages posted by the connected user. The default is to simply render the corresponding number of ✓ symbols. If you do not want to have checkmarks, pass a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) value. This prop is not relevant for messages which have not been posted by the connected user.
+
+### `renderTime`
+
+The function used to render the message's posting time in the bottom right corner of the component. The function is invoked with the posting timestamp as a [Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). The default is to render a HH:MM string (the 24-hour format).
 
 ### `onLongPress`
 

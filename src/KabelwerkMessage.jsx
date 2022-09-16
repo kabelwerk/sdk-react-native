@@ -65,10 +65,18 @@ const renderKabelwerkCheckmarks = function (number) {
   );
 };
 
+// the default function for rendering a message's posting time
+const renderKabelwerkTime = function (datetime) {
+  const styles = styleSheet.get();
+
+  return <Text style={styles.time}>{toTimeString(datetime)}</Text>;
+};
+
 const KabelwerkMessage = React.memo(function ({
   message,
   theirMarker = undefined,
   renderCheckmarks = renderKabelwerkCheckmarks,
+  renderTime = renderKabelwerkTime,
   onLongPress = yank,
 }) {
   const windowDimensions = useWindowDimensions();
@@ -106,7 +114,7 @@ const KabelwerkMessage = React.memo(function ({
           <KabelwerkMarkup html={message.html} />
         )}
         <View style={styles.footer}>
-          <Text style={styles.time}>{toTimeString(message.insertedAt)}</Text>
+          {renderTime(message.insertedAt)}
           {isOurs && renderCheckmarks && renderCheckmarks(isMarked ? 2 : 1)}
         </View>
       </View>
@@ -140,6 +148,7 @@ const styleSheet = initStyleSheet((theme) => ({
     justifyContent: 'flex-end',
   },
   time: {
+    color: theme.onSurfaceColor,
     fontSize: theme.fontSizeSmall,
   },
   checkmarks: {

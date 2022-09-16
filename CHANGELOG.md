@@ -1,10 +1,14 @@
 # Changelog
 
+## 0.1.4 (TBA)
+
+- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderTime` prop.
+
 ## 0.1.3 (2022-09-15)
 
 - Added the [`<KabelwerkTheme>`](./docs/KabelwerkTheme.md) context.
 - [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md): added the `onReady` prop.
-- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderCheckmarks` and `onLongPress` prop.
+- [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderCheckmarks` and `onLongPress` props.
 
 ## 0.1.2 (2022-08-28)
 

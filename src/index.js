@@ -1,5 +1,6 @@
 export { KabelwerkContext, KabelwerkProvider } from './KabelwerkContext.jsx';
 export { KabelwerkMarkup } from './KabelwerkMarkup.js';
+export { KabelwerkMessage } from './KabelwerkMessage.jsx';
 export { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
 export { KabelwerkInbox } from './KabelwerkInbox.jsx';
 export { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
