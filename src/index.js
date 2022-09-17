@@ -1,9 +1,10 @@
 export { KabelwerkContext, KabelwerkProvider } from './KabelwerkContext.jsx';
+export { KabelwerkInbox } from './KabelwerkInbox.jsx';
+export { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
 export { KabelwerkMarkup } from './KabelwerkMarkup.js';
 export { KabelwerkMessage } from './KabelwerkMessage.jsx';
 export { KabelwerkMessageForm } from './KabelwerkMessageForm.jsx';
-export { KabelwerkInbox } from './KabelwerkInbox.jsx';
-export { KabelwerkInboxItem } from './KabelwerkInboxItem.jsx';
+export { KabelwerkMessageSeparator } from './KabelwerkMessageSeparator.jsx';
 export { KabelwerkRoom } from './KabelwerkRoom.jsx';
 export { KabelwerkRoomScreen } from './KabelwerkRoomScreen.jsx';
 export { KabelwerkStatusBar } from './KabelwerkStatusBar.jsx';

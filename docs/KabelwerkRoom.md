@@ -10,7 +10,7 @@ The `<KabelwerkRoom>` component renders a chat room.
   renderMessage={(message, theirMarker) => (
     <KabelwerkMessage message={message} theirMarker={theirMarker} />
   )}
-  renderMessageSeparator={(date) => <KabelwerkMessageSeparator date={date} />}
+  renderMessageSeparator={(date) => <KabelwerkMessageSeparator text={date} />}
   renderMessageForm={(postMessage, postUpload) => (
     <KabelwerkMessageForm postMessage={postMessage} postUpload={postUpload} />
   )}
@@ -31,7 +31,7 @@ The function used to render the chat messages in the room. The default is to ren
 
 ### `renderMessageSeparator`
 
-The function used to render the separators between messages posted on different dates. The default is to render a [`<KabelwerkMessageSeparator>`](./KabelwerkMessageSeparator.md) component.
+The function used to render the separators between messages posted on different dates. The function is invoked with a date string in the `YYYY-MM-DD` format. The default is to render a [`<KabelwerkMessageSeparator>`](./KabelwerkMessageSeparator.md) component with the given date string (surrounded by em dashes).
 
 ### `renderMessageForm`
 

@@ -8,13 +8,13 @@ const areEqual = function (prevProps, nextProps) {
   return true;
 };
 
-const KabelwerkMessageSeparator = React.memo(function ({ date }) {
+const KabelwerkMessageSeparator = React.memo(function ({ text }) {
   const theme = React.useContext(ThemeContext);
   const styles = styleSheet.render(theme);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>&mdash; {date} &mdash;</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 }, areEqual);

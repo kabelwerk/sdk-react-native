@@ -3,6 +3,7 @@
 ## 0.1.4 (TBA)
 
 - [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderTime` prop.
+- [`<KabelwerkMessageSeparator>`](./docs/KabelwerkMessageSeparator.md): renamed the `date` prop to `text`.
 
 ## 0.1.3 (2022-09-15)
 

@@ -85,7 +85,7 @@ const renderKabelwerkMessage = function (message, theirMarker) {
 // the default function for rendering the separators between messages posted on
 // different dates
 const renderKabelwerkMessageSeparator = function (dateString) {
-  return <KabelwerkMessageSeparator date={dateString} />;
+  return <KabelwerkMessageSeparator text={'— ' + dateString + ' —'} />;
 };
 
 // the default function for rendering the form for posting messages in a room

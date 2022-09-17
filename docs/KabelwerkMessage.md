@@ -2,7 +2,7 @@
 
 The `<KabelwerkMessage>` component renders a single chat message in a room.
 
-Most probably you will not directly use the `<KabelwerkMessage>` component in your code — on the contrary, it is likely that you will want to replace it with a component of your own.
+Probably you will not directly use the `<KabelwerkMessage>` component in your code — on the contrary, it is likely that you will want to replace it with a component of your own.
 
 ## Example
 
@@ -32,7 +32,7 @@ The function used to render the checkmarks in the bottom right corner of message
 
 ### `renderTime`
 
-The function used to render the message's posting time in the bottom right corner of the component. The function is invoked with the posting timestamp as a [Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). The default is to render a HH:MM string (the 24-hour format).
+The function used to render the message's posting time in the bottom right corner of the component. The function is invoked with the posting timestamp as a [Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). The default is to render a `HH:MM` string (the 24-hour format).
 
 ### `onLongPress`
 
