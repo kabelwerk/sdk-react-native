@@ -78,6 +78,7 @@ const KabelwerkMessage = React.memo(function ({
   renderCheckmarks = renderKabelwerkCheckmarks,
   renderTime = renderKabelwerkTime,
   onLongPress = yank,
+  style = undefined,
 }) {
   const windowDimensions = useWindowDimensions();
 
@@ -94,6 +95,7 @@ const KabelwerkMessage = React.memo(function ({
           styles.container,
           isOurs ? styles.ours : styles.theirs,
           message.type == 'text' ? styles.text : undefined,
+          style,
         ]}
       >
         {message.type == 'image' ? (

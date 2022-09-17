@@ -13,6 +13,7 @@ Probably you will not directly use the `<KabelwerkMessage>` component in your co
   renderCheckmarks={(number) => number == 2 && <Text>seen</Text>}
   renderTime={(d) => <Text>{d.toTimeString().substring(0, 5)}</Text>}
   onLongPress={(message) => Clipboard.setString(message.text)}
+  style={{ borderRadius: 10 }}
 />
 ```
 
@@ -37,6 +38,10 @@ The function used to render the message's posting time in the bottom right corne
 ### `onLongPress`
 
 Called — with the chat message object — when the user long-presses the component. The default is to copy the message's text to the clipboard if the message is a text message and to do nothing otherwise.
+
+### `style`
+
+An object with extra styles to be applied to the message container component. You may want to use this to, for example, set a different background colour for messages authored by the connected user.
 
 ## See also
 
