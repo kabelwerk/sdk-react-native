@@ -102,7 +102,6 @@ const styleSheet = initStyleSheet((theme) => ({
   },
   isNew: {
     backgroundColor: theme.accentColor,
-    borderRadius: theme.borderRadius,
     color: theme.onAccentColor,
     fontSize: theme.fontSizeBase,
     marginLeft: theme.spacingBase,
