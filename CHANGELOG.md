@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.1.4 (TBA)
+## 0.1.4 (2022-09-20)
 
 - [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderTime` and `style` props.
 - [`<KabelwerkMessageSeparator>`](./docs/KabelwerkMessageSeparator.md): renamed the `date` prop to `text`.
+- [`<KabelwerkTheme>`](./docs/KabelwerkTheme.md): removed `borderRadius`.
 
 ## 0.1.3 (2022-09-15)
 
