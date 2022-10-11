@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 (2022-10-11)
+
+- [`<KabelwerkMarkup>`](./docs/KabelwerkMarkup.md): HTML entities for special characters are handled correctly.
+
 ## 0.1.4 (2022-09-20)
 
 - [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `renderTime` and `style` props.
