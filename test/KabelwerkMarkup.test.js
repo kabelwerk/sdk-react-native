@@ -14,8 +14,10 @@ describe('convert', () => {
 
   test('special chars', () => {
     match('<p>&lt;script&gt;alert(&#39;XSS&#39;);&lt;/script&gt;</p>', [
-      ['p', '&lt;script&gt;alert(&#39;XSS&#39;);&lt;/script&gt;'],
+      ['p', `<script>alert('XSS');</script>`],
     ]);
+
+    match('<p>&amp;quot;</p>', [['p', '&quot;']]);
   });
 
   test('line breaks', () => {

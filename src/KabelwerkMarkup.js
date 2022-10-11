@@ -93,7 +93,7 @@ const convert = function (html, elemDict) {
 
   while ((match = regex.exec(html))) {
     if (match.index > index) {
-      addChild(html.slice(index, match.index));
+      addChild(unescapeEntities(html.slice(index, match.index)));
     }
 
     index = match.index + match[0].length;
@@ -128,7 +128,7 @@ const convert = function (html, elemDict) {
   return output;
 };
 
-// helper for the convert function above
+// convert a string of html attributes to an object of these
 const parseAttrs = function (htmlAttrs) {
   const regex = new RegExp(ATTRS_REGEX);
   const attrs = Object.create(null);
@@ -139,6 +139,16 @@ const parseAttrs = function (htmlAttrs) {
   }
 
   return attrs;
+};
+
+// convert any html entities for special chars back to special chars
+const unescapeEntities = function (string) {
+  return string
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&');
 };
 
 const KabelwerkMarkup = function ({ html, elements }) {
