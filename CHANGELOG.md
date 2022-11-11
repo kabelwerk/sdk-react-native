@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6 (TBA)
+
+- Upgraded the Kabelwerk SDK for JavaScript to [0.3.4](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.4).
+
 ## 0.1.5 (2022-10-11)
 
 - [`<KabelwerkMarkup>`](./docs/KabelwerkMarkup.md): HTML entities for special characters are handled correctly.
