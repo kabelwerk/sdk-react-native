@@ -2,6 +2,7 @@
 
 ## 0.1.6 (TBA)
 
+- [`<KabelwerkContext>`](./docs/KabelwerkContext.md): added the `pushNotificationsToken` and `pushNotificationsEnabled` props.
 - Upgraded the Kabelwerk SDK for JavaScript to [0.3.4](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.4).
 
 ## 0.1.5 (2022-10-11)

@@ -24,6 +24,8 @@ const KabelwerkProvider = function ({
   userName = undefined,
   onError = undefined,
   onNotification = undefined,
+  pushNotificationsToken = undefined,
+  pushNotificationsEnabled = true,
 }) {
   // an int incremented each time the connection needs to be re-established
   // after having been closed by the OS
@@ -88,6 +90,14 @@ const KabelwerkProvider = function ({
         Kabelwerk.updateUser({ name: userName });
       }
 
+      // update the push notification settings for the device, if needed
+      if (pushNotificationsToken) {
+        Kabelwerk.updateDevice({
+          pushNotificationsToken,
+          pushNotificationsEnabled,
+        });
+      }
+
       setIsReady(true);
     });
 
@@ -122,6 +132,8 @@ const KabelwerkProvider = function ({
     onError,
     onNotification,
     userName,
+    pushNotificationsToken,
+    pushNotificationsEnabled,
   ]);
 
   return (
