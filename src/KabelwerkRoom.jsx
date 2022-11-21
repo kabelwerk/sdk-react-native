@@ -77,6 +77,19 @@ const expandNew = function (listItems, message) {
   return items.concat(listItems);
 };
 
+// remove a message — if present — from a list of chat items
+const deleteFrom = function (listItems, message) {
+  const newList = [];
+
+  for (let i = 0; i < listItems.length; i++) {
+    if (listItems[i].id != message.id) {
+      newList.push(listItems[i]);
+    }
+  }
+
+  return newList;
+};
+
 // the default function for rendering the chat messages in a room
 const renderKabelwerkMessage = function (message, theirMarker) {
   return <KabelwerkMessage message={message} theirMarker={theirMarker} />;
@@ -149,6 +162,11 @@ const KabelwerkRoom = function ({
         setShowWelcomeBanner(false);
 
         room.current.moveMarker();
+      });
+
+      // when a message has been deleted from the room
+      room.current.on('message_deleted', (message) => {
+        setListItems((listItems) => deleteFrom(listItems, message));
       });
 
       // when a marker in the room is moved
