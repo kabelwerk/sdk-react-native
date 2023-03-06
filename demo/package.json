@@ -4,31 +4,26 @@
   "private": true,
   "main": "src/App.jsx",
   "dependencies": {
-    "@react-navigation/native": "^6.0.10",
-    "@react-navigation/native-stack": "^6.6.1",
-    "expo": "~44.0.0",
-    "expo-cli": "^5.4.12",
-    "expo-document-picker": "~10.1.3",
-    "expo-notifications": "~0.14.0",
-    "expo-secure-store": "~11.1.0",
-    "expo-splash-screen": "~0.14.1",
-    "expo-status-bar": "~1.2.0",
-    "expo-updates": "~0.11.7",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
-    "react-native-screens": "~3.10.1",
-    "react-native-web": "0.17.1"
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native-stack": "^6.9.12",
+    "expo": "~48.0.5",
+    "expo-document-picker": "~11.2.1",
+    "expo-notifications": "~0.18.1",
+    "expo-splash-screen": "~0.18.1",
+    "expo-status-bar": "~1.4.4",
+    "kabelwerk-react-native": "^0.1.5",
+    "react": "18.2.0",
+    "react-native": "0.71.3",
+    "expo-secure-store": "~12.1.1",
+    "expo-updates": "~0.16.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.4"
+    "@babel/core": "^7.20.0"
   },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "web": "expo start --web"
   }
 }
