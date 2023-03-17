@@ -8,6 +8,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "eas-cli": "^3.8.0",
     "expo": "~48.0.5",
+    "expo-cli": "^6.3.2",
     "expo-document-picker": "~11.2.1",
     "expo-notifications": "~0.18.1",
     "expo-secure-store": "~12.1.1",
