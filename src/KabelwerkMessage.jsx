@@ -98,20 +98,26 @@ const KabelwerkMessage = React.memo(function ({
           style,
         ]}
       >
-        {message.type == 'image' ? (
-          <Image
-            resizeMethod="scale"
-            resizeMode="contain"
-            source={{
-              uri: message.upload.preview.url,
-              width: message.upload.preview.width,
-              height: message.upload.preview.height,
-            }}
-            style={[
-              inferImageDimensions(message.upload.preview, windowDimensions),
-              styles.image,
-            ]}
-          />
+        {message.type == 'image' || message.type == 'attachment' ? (
+          <>
+            <Image
+              resizeMethod="scale"
+              resizeMode="contain"
+              source={{
+                uri: message.upload.preview.url,
+                width: message.upload.preview.width,
+                height: message.upload.preview.height,
+              }}
+              style={[
+                inferImageDimensions(message.upload.preview, windowDimensions),
+                styles.image,
+              ]}
+            />
+
+            {message.type == 'attachment' && (
+              <Text style={styles.attachmentName}>{message.upload.name}</Text>
+            )}
+          </>
         ) : (
           <KabelwerkMarkup html={message.html} />
         )}
@@ -143,6 +149,12 @@ const styleSheet = initStyleSheet((theme) => ({
   image: {
     marginBottom: theme.spacingBase,
   },
+  attachmentName: {
+    color: theme.onSurfaceColor,
+    fontFamily: theme.fontFamily,
+    fontSize: theme.fontSizeBase,
+    marginBottom: theme.spacingBase,
+  },
   footer: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -150,6 +162,7 @@ const styleSheet = initStyleSheet((theme) => ({
   },
   time: {
     color: theme.onSurfaceColor,
+    fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeSmall,
   },
   checkmarks: {
@@ -158,6 +171,7 @@ const styleSheet = initStyleSheet((theme) => ({
     width: 18,
   },
   checkmark: {
+    fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeSmall,
     marginLeft: -4,
   },
