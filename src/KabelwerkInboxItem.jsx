@@ -52,8 +52,9 @@ const KabelwerkInboxItem = function ({
                   ? 'you'
                   : item.message.user.name}
                 {' — '}
-                {item.message.type == 'image' ? (
-                  <Text>image</Text>
+                {item.message.type == 'image' ||
+                item.message.type == 'attachment' ? (
+                  <Text>({item.message.type})</Text>
                 ) : (
                   <Text>{item.message.text}</Text>
                 )}
@@ -90,6 +91,7 @@ const styleSheet = initStyleSheet((theme) => ({
     fontWeight: 'bold',
   },
   datetime: {
+    fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeSmall,
   },
   lowerHalf: {
@@ -103,6 +105,7 @@ const styleSheet = initStyleSheet((theme) => ({
   isNew: {
     backgroundColor: theme.accentColor,
     color: theme.onAccentColor,
+    fontFamily: theme.fontFamily,
     fontSize: theme.fontSizeBase,
     marginLeft: theme.spacingBase,
     paddingHorizontal: theme.spacingBase,
