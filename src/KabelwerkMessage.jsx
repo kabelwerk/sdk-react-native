@@ -4,6 +4,7 @@ import {
   ActionSheetIOS,
   Clipboard,
   Image,
+  Linking,
   Platform,
   Pressable,
   Text,
@@ -26,6 +27,13 @@ const areEqual = function (prevProps, nextProps) {
   }
 
   return true;
+};
+
+// open the browser with the message's upload — if there is such
+const openUpload = function (message) {
+  if (message.type == 'image' || message.type == 'attachment') {
+    Linking.openURL(message.upload.original.url);
+  }
 };
 
 // copy the message to the clipboard — if it is a text message
@@ -77,6 +85,7 @@ const KabelwerkMessage = React.memo(function ({
   theirMarker = undefined,
   renderCheckmarks = renderKabelwerkCheckmarks,
   renderTime = renderKabelwerkTime,
+  onPress = openUpload,
   onLongPress = yank,
   style = undefined,
 }) {
@@ -89,7 +98,10 @@ const KabelwerkMessage = React.memo(function ({
   const isMarked = isOurs && theirMarker >= message.id;
 
   return (
-    <Pressable onLongPress={() => onLongPress(message)}>
+    <Pressable
+      onPress={() => onPress(message)}
+      onLongPress={() => onLongPress(message)}
+    >
       <View
         style={[
           styles.container,

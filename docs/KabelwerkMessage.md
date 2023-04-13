@@ -12,7 +12,12 @@ Probably you will not directly use the `<KabelwerkMessage>` component in your co
   theirMarker={42}
   renderCheckmarks={(number) => number == 2 && <Text>seen</Text>}
   renderTime={(d) => <Text>{d.toTimeString().substring(0, 5)}</Text>}
-  onLongPress={(message) => Clipboard.setString(message.text)}
+  onPress={(message) =>
+    message.type != 'text' && Linking.openURL(message.upload.original.url)
+  }
+  onLongPress={(message) =>
+    message.type == 'text' && Clipboard.setString(message.text)
+  }
   style={{ borderRadius: 10 }}
 />
 ```
@@ -34,6 +39,10 @@ The function used to render the checkmarks in the bottom right corner of message
 ### `renderTime`
 
 The function used to render the message's posting time in the bottom right corner of the component. The function is invoked with the posting timestamp as a [Date object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). The default is to render a `HH:MM` string (the 24-hour format).
+
+### `onPress`
+
+Called — with the chat message object — when the user presses the component. The default is to do nothing if the message is a text message and to open the browser with the message's upload otherwise.
 
 ### `onLongPress`
 
