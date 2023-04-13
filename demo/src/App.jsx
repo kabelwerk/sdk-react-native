@@ -78,7 +78,10 @@ const App = function () {
       identifier: `message-${message.id}`,
       content: {
         title: message.user.name,
-        body: message.text,
+        body:
+          message.type == 'image' || message.type == 'attachment'
+            ? `(${message.type})`
+            : message.text,
         data: { roomId: message.roomId },
       },
       trigger: null,
