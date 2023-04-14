@@ -119,11 +119,11 @@ const App = function () {
     };
   }, []);
 
-  // call the chosen image picker dependency
-  const pickImage = React.useCallback(() => {
+  // call the chosen file picker dependency
+  const pickFile = React.useCallback(() => {
     return DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false,
-      type: ['image/jpeg', 'image/png'],
+      type: ['image/jpeg', 'image/png', 'application/pdf'],
     }).then((result) => {
       if (result.type == 'cancel') {
         return Promise.reject();
@@ -171,7 +171,7 @@ const App = function () {
                     <KabelwerkMessageForm
                       postMessage={postMessage}
                       postUpload={postUpload}
-                      pickImage={pickImage}
+                      pickFile={pickFile}
                     />
                   )}
                 />

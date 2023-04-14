@@ -8,7 +8,7 @@ Most probably you will not directly use the `<KabelwerkMessageForm>` component i
 
 ```jsx
 // example using expo-document-picker
-const pickImage = function () {
+const pickFile = function () {
   return DocumentPicker.getDocumentAsync({
     copyToCacheDirectory: false,
     type: ['image/jpeg', 'image/png'],
@@ -28,7 +28,7 @@ const pickImage = function () {
 <KabelwerkMessageForm
   postMessage={postMessage}
   postUpload={postUpload}
-  pickImage={pickImage}
+  pickFile={pickFile}
 />;
 ```
 
@@ -40,11 +40,11 @@ Called when the user intends to post a new message in the chat room via the form
 
 ### `postUpload`
 
-Called when the user intends to upload a new file in the chat room via the form. Called with the resolved value of the `pickImage` callback (see below). It should return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which resolves into an upload object if the file has been uploaded successfully.
+Called when the user intends to upload a new file in the chat room via the form. Called with the resolved value of the `pickFile` callback (see below). It should return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which resolves into an upload object if the file has been uploaded successfully.
 
-### `pickImage`
+### `pickFile`
 
-Called when the user intends to pick an image for uploading in the chat room. Called without arguments, the function should return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which resolves into an `{ name, type, uri }` object — which can then be uploaded to the Kabelwerk backend via the `postUpload` callback.
+Called when the user intends to pick a file for uploading in the chat room. Called without arguments, the function should return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which resolves into an `{ name, type, uri }` object — which can then be uploaded to the Kabelwerk backend via the `postUpload` callback.
 
 ## See also
 

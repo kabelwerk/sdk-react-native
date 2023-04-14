@@ -6,6 +6,7 @@
 - The [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md) component now handles `message_deleted` events.
 - The [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md) component can now also render attachment messages.
 - [`<KabelwerkMessage>`](./docs/KabelwerkMessage.md): added the `onPress` prop.
+- [`<KabelwerkMessageForm>`](./docs/KabelwerkMessageForm.md): replaced the `pickImage` prop with the new `pickFile`.
 - Upgraded the Kabelwerk SDK for JavaScript to [0.3.5](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.5).
 
 ## 0.1.5 (2022-10-11)

@@ -6,7 +6,7 @@ import { ThemeContext, initStyleSheet } from './KabelwerkTheme.jsx';
 const KabelwerkMessageForm = function ({
   postMessage,
   postUpload,
-  pickImage = undefined,
+  pickFile = undefined,
 }) {
   const theme = React.useContext(ThemeContext);
   const styles = styleSheet.render(theme);
@@ -39,15 +39,15 @@ const KabelwerkMessageForm = function ({
     }
   };
 
-  // open the image picker for the user to select a file, upload the selected
-  // file, and post an image message with the upload
+  // open the file picker for the user to select a file, upload the selected
+  // file, and post an image or an attachment message with the upload
   //
   // disable the send buttons until the promise chain resolves
-  const postImageMessage = function () {
-    if (pickImage) {
+  const postUploadMessage = function () {
+    if (pickFile) {
       setButtonsEnabled(false);
 
-      pickImage()
+      pickFile()
         .then((file) => {
           return postUpload(file);
         })
@@ -55,7 +55,7 @@ const KabelwerkMessageForm = function ({
           return postMessage({ uploadId: upload.id });
         })
         .catch(() => {
-          // if we end up here, it means that either the user closed the image
+          // if we end up here, it means that either the user closed the file
           // picker without selecting a file or that there has been an error —
           // in which case KabelwerkRoom takes care of showing an alert
         })
@@ -84,11 +84,11 @@ const KabelwerkMessageForm = function ({
           <Text style={styles.sendButtonText}>▶</Text>
         </TouchableOpacity>
       ) : (
-        pickImage && (
+        pickFile && (
           <TouchableOpacity
             style={styles.sendButton}
             disabled={!buttonsEnabled}
-            onPress={postImageMessage}
+            onPress={postUploadMessage}
           >
             <Text style={styles.sendButtonText}>▲</Text>
           </TouchableOpacity>
