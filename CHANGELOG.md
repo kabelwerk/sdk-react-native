@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.6 (TBA)
+## 0.1.6 (2022-04-14)
 
 - [`<KabelwerkContext>`](./docs/KabelwerkContext.md): added the `pushNotificationsToken` and `pushNotificationsEnabled` props.
 - The [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md) component now handles `message_deleted` events.
