@@ -34,7 +34,7 @@ const ELEMENTS = Object.freeze({
     return React.createElement(
       Text,
       { key: index, style: styles.em },
-      children
+      children,
     );
   },
   strong: function (_, children, index) {
@@ -43,7 +43,7 @@ const ELEMENTS = Object.freeze({
     return React.createElement(
       Text,
       { key: index, style: styles.strong },
-      children
+      children,
     );
   },
   a: function (attrs, children, index) {
@@ -56,7 +56,7 @@ const ELEMENTS = Object.freeze({
         style: styles.a,
         onPress: () => Linking.openURL(attrs.href),
       },
-      children
+      children,
     );
   },
 });

@@ -35,7 +35,7 @@ describe('convert', () => {
   test('links', () => {
     match(
       '<p><a href="https://kabelwerk.io" target="_blank">https://kabelwerk.io</a></p>',
-      [['p', ['a', 'https://kabelwerk.io', 'https://kabelwerk.io']]]
+      [['p', ['a', 'https://kabelwerk.io', 'https://kabelwerk.io']]],
     );
 
     match(
@@ -46,7 +46,7 @@ describe('convert', () => {
           ['a', 'https://глагол.орг/прашни-думи/', 'прашни думи'],
           ' на български',
         ],
-      ]
+      ],
     );
   });
 
@@ -60,7 +60,7 @@ describe('convert', () => {
           ['strong', 'bold ', ['em', 'italic bold']],
           ' with more text',
         ],
-      ]
+      ],
     );
 
     match('<p><strong><em>bold and italic</em></strong></p>', [
@@ -106,7 +106,7 @@ describe('convert', () => {
       [
         ['p', ['strong', 'strong'], '\n', ['em', 'em']],
         ['p', ['a', 'https://kabelwerk.io', 'link']],
-      ]
+      ],
     );
   });
 });

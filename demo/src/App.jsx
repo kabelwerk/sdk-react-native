@@ -111,7 +111,7 @@ const App = function () {
         navigationRef.current.navigate('chat-room', {
           roomId: response.notification.request.content.data.roomId,
         });
-      }
+      },
     );
 
     return () => {

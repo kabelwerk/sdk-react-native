@@ -55,7 +55,7 @@ const yank = function (message) {
           if (buttonIndex == 0) {
             Clipboard.setString(message.text);
           }
-        }
+        },
       );
     }
   }
@@ -140,8 +140,7 @@ const KabelwerkMessage = React.memo(function ({
       </View>
     </Pressable>
   );
-},
-areEqual);
+}, areEqual);
 
 const styleSheet = initStyleSheet((theme) => ({
   container: {
