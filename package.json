@@ -24,7 +24,7 @@
   "type": "module",
   "repository": "github:kabelwerk/sdk-react-native",
   "dependencies": {
-    "kabelwerk": "0.3.5"
+    "kabelwerk": "0.3.6"
   },
   "devDependencies": {
     "jest": "^29.6.2",
