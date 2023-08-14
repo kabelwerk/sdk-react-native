@@ -1,10 +1,10 @@
 # Changelog
 
-## 0.1.7 (TBA)
+## 0.1.7 (2023-08-14)
 
 - Upgraded the Kabelwerk SDK for JavaScript to [0.3.6](https://github.com/kabelwerk/sdk-js/releases/tag/v0.3.6).
 
-## 0.1.6 (2022-04-14)
+## 0.1.6 (2023-04-14)
 
 - [`<KabelwerkContext>`](./docs/KabelwerkContext.md): added the `pushNotificationsToken` and `pushNotificationsEnabled` props.
 - The [`<KabelwerkRoom>`](./docs/KabelwerkRoom.md) component now handles `message_deleted` events.
